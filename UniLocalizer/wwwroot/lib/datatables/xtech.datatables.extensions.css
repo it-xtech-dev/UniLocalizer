@@ -1,0 +1,315 @@
+﻿
+/* Data table styling */
+.dataTables_length,
+.dataTables_filter {
+    display: inline-block;
+    margin-left: 1rem;
+}
+.dataTables_ButtonHeader {
+    padding-top: 0.5rem;
+}
+.dataTables_ButtonHeader .dt-buttons.btn-group {
+    float: left;
+}
+.dataTables_ButtonHeader .dataTables_filter {
+    float: right;
+}
+.dataTables_ButtonHeader .dataTables_length {
+    float: right;
+}
+table.dataTable tbody > tr > td,
+table.dataTable thead > tr > th {
+    box-sizing: border-box;
+    overflow: hidden;
+    border-top-style: none;
+}
+table.dataTable tbody > tr > td {
+    position: relative;
+    overflow: visible;
+    overflow-wrap: break-word;
+    padding: 0;
+    vertical-align: top;
+}
+table.table-bordered.dataTable tbody td {
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(255,255,255,0.6);
+}
+#tableContainer {
+    position: relative;
+    background-color: #e1e1e1;
+}
+#scrollContainer {
+    overflow: scroll;
+    min-height: 300px;
+    position: relative;
+}
+#fixedHeader {
+    overflow: hidden;
+    position: absolute;
+    left:0;
+    top:0;
+    z-index: 20;
+}
+#fixedHeader table {
+    background-color: #FFF;
+    position: relative;
+}
+table.dataTable {
+    table-layout: fixed;
+    margin: 0 !important;
+    background-color: #FFF;
+}
+table.dataTable td > .cell {
+    overflow: hidden;
+    padding: 0.2rem 0.75rem;
+}
+table[data-row-lines="0"] td > .cell {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+table.dataTable[data-row-lines="0"] td > .cell.height-indicator {
+    position: static;
+}
+table[data-row-lines="0"] tr td > .cell {
+    min-height: 30px;
+}
+table[data-row-lines="1"] tr[data-row-lines="4"]:not(.row-expanded) td > .cell,
+table[data-row-lines="1"] tr[data-row-lines="3"]:not(.row-expanded) td > .cell,
+table[data-row-lines="1"] tr[data-row-lines="2"]:not(.row-expanded) td > .cell,
+table:not([data-row-lines="0"]) tr[data-row-lines="1"] td > .cell {
+    height: 30px;
+}
+table[data-row-lines="2"] tr[data-row-lines="4"]:not(.row-expanded) td > .cell,
+table[data-row-lines="2"] tr[data-row-lines="3"]:not(.row-expanded) td > .cell,
+table:not([data-row-lines="0"]) tr[data-row-lines="2"] td > .cell {
+    height: 50px;
+}
+table[data-row-lines="3"] tr[data-row-lines="4"]:not(.row-expanded) td > .cell,
+table:not([data-row-lines="0"]) tr[data-row-lines="3"] td > .cell {
+    height: 70px;
+}
+table:not([data-row-lines="0"]) tr[data-row-lines="4"] td > .cell {
+    height: 92px;
+}
+
+table.dataTable td > .cell .cell-line {
+    width: 100%;
+    height: 22px; /* sensitive to font-size */
+    overflow: hidden;
+}
+
+/* table cell actions */
+table.dataTable [data-action] {
+    cursor: pointer;
+    color: #2780E3;
+}
+table.dataTable tr.selected [data-action] {
+    color: #a2d4ed;
+}
+table.dataTable [data-action]:hover {
+    text-decoration: underline;
+}
+table.dataTable [data-action="editTeamleaderNotes"]:hover:empty:before {
+    content: attr(data-visual-label); /*'+ Add a note'*/
+}
+/* expander indicates that cell contains more data than is displayed */
+table.dataTable td .cell-expander {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: darkgray;
+    width: 20px;
+    height: 10px;
+    border-radius: 2px;
+    z-index: 1;
+}
+table.dataTable td .cell-expander:before {
+    content: '...';
+    position: absolute;
+    color: #FFF;
+    top: -10px;
+    left: 5px;
+}
+table.dataTable tr.row-expanded .cell-expander:before {
+    content: '^';
+    top: -4px;
+}
+/* processing */
+div.dataTables_wrapper div.dataTables_processing {
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    font-size: 20px;
+    background-color: rgba(255,255,255,0.9);
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+}
+div.dataTables_wrapper div.dataTables_processing:not(.hidden) {
+    display: flex !important; /* dirty hack to overide display:block that is set by datatables.js */
+}
+/* cell-tips */
+table.dataTable td > .cell-tip {
+    position: absolute;
+    bottom: calc(100% + 5px);
+    left: 0;
+    background-color: rgba(0,0,0,0.8);
+    color: #FFF;
+    opacity: 0;
+    height: 0;
+    width: 0;
+    border-radius: 4px;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 11px;
+    z-index: 10;
+    pointer-events: none;
+}
+table.dataTable td > .cell-tip:before {
+    content: '';
+    position: absolute;
+    display: block;
+    border: 7px solid rgba(0,0,0,0);
+    border-top: 7px solid rgba(0,0,0,0.8);
+    top: 100%;
+    left: 10px;
+}
+/* Because table area oveflow is hidden popup would be cutted. To fix this behavior popups for first 4 rows are displayed to the left of cell instead of top position.*/
+table.dataTable tr:nth-child(-n+4) td > .cell-tip {
+    left: calc(100% + 5px);
+    top: 0;
+    bottom: auto;
+}
+table.dataTable tr:nth-child(-n+4) td > .cell-tip:before {
+    top: 10px;
+    left: -14px;
+    border: 7px solid rgba(0,0,0,0);
+    border-right: 7px solid rgba(0,0,0,0.8);
+}
+table.dataTable td:not(.edit-on):hover > .cell-tip {
+    transition: opacity 0.2s ease-in 1.1s, height 0.01s linear 1s, width 0.01s linear 1s;
+    opacity: 1;
+    width: auto;
+    height: auto;
+    max-height: 240px;
+    padding: 8px;
+}
+
+table.dataTable td > .cell-tip p {
+    margin: 0;
+    margin-top: 5px;
+}
+table.dataTable td > .cell-tip ul {
+    margin: 0;
+}
+table.dataTable td > .cell-tip ul li {
+    margin-left: -20px;
+}
+
+/* inline editor */
+table.dataTable .cell-editor {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    box-sizing: border-box;
+    z-index: 5;
+    display: flex;
+    color: #373a3c; /* boostrap body color */
+}
+table.dataTable select.cell-editor {
+    height: auto;
+    min-height: initial;
+}
+table.dataTable tr:not(:nth-child(-n+3)):nth-last-child(-n+3) select.cell-editor {
+    top: auto;
+    bottom: 0;
+}
+
+table.dataTable [data-edit]:hover:before {
+    position: absolute;
+    display: inline-block;
+    left: 0;
+    top: 0;
+    content: "\f304";
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    color: gray;
+    padding: 1px 3px;
+    font-size: 10px;
+    background-color: rgba(255,255,255,0.8);
+    z-index: 5;
+    border-radius: 100% 5%;
+}
+.cell-editor {
+    box-shadow: 0 0 40px 0 rgba(0,0,0,0.5);
+}
+/* cell editor - tags */
+.cell-editor .tagify {
+    background-color: #FFF;
+    min-height: 100%;
+    min-width: 100%;
+}
+/* tag cells */
+/* TODO: move toi right place */
+table.dataTable td > .cell.tagify {
+    padding: 0;
+}
+.cell.tagify {
+    border: none;
+}
+.cell.tagify tag > div {
+    padding: 0 .3em;
+    font-size: 80%;
+}
+.cell.tagify tag > div:before {
+    display: none;
+}
+
+/* cell background formats */
+table.dataTable .bkg-white {
+    background-color: #FFFFFF;
+}
+table.dataTable .bkg-grayed {
+    background-color: #f1f1f1;
+}
+table.dataTable .bkg-green {
+    background-color: green;
+    color: #FFF;
+}
+table.dataTable .bkg-light-green {
+    background-color: lightgreen;
+}
+table.dataTable .bkg-orange {
+    background-color: orange;
+}
+
+/* table selector styles improved */
+table.dataTable thead th.select-checkbox {
+    cursor: pointer;
+}
+table.dataTable tbody td.select-checkbox:before,
+table.dataTable tbody th.select-checkbox:before {
+    margin-top: -9px;
+    border-radius: 0;
+    /* top: calc(50% + 3px); */
+}
+table.dataTable tbody tr.selected td.select-checkbox:before,
+table.dataTable tbody tr.selected th.select-checkbox:before {
+    border-color: #FFF;
+}
+table.dataTable tr.selected td.select-checkbox:after,
+table.dataTable tr.selected th.select-checkbox:after {
+    /* top: calc(50% + 3px); */
+    margin-top: -17px;
+    text-shadow: none;
+}

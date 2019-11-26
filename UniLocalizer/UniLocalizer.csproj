@@ -1,0 +1,97 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+    <Authors>xtech.dev@gmail.com</Authors>
+    <Company>xtech.pl</Company>
+    <Copyright>xtech.pl</Copyright>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>Localize your asp core app with ease. Autogenerate tokes by browsing ui. Translate tokens with simple online editor. See results of your work live - just after refresing the page (no more compiling resource files). Use easy readable json fromat for  translation storage.</Description>
+    <AssemblyVersion>0.9.0.0</AssemblyVersion>
+    <FileVersion>0.9.0.0</FileVersion>
+    <Version>0.9.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="2.2.0" />
+    <PackageReference Include="NuGet.CommandLine" Version="5.3.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="WebMarkupMin.NUglify" Version="2.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\css\custom.css" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.css" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap1.css.map" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap1.min.css" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap1.min.css.map" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+    <Content Remove="wwwroot\lib\datatables\xtech.datatables.extensions.css" />
+    <Content Remove="wwwroot\lib\jquery\dist\jquery.js" />
+    <Content Remove="wwwroot\lib\jquery\dist\jquery.min.js" />
+    <Content Remove="wwwroot\lib\jquery\dist\jquery.min.map" />
+    <Content Remove="wwwroot\lib\jquery\LICENSE.txt" />
+    <Content Remove="wwwroot\lib\preloader\jquery.min.js" />
+    <Content Remove="wwwroot\lib\preloader\jquery.min.map" />
+    <Content Remove="wwwroot\lib\preloader\preloader.css" />
+    <Content Remove="wwwroot\lib\preloader\preloader.js" />
+    <Content Remove="wwwroot\lib\toastr\toastr.css" />
+    <Content Remove="wwwroot\lib\toastr\toastr.js" />
+    <Content Remove="wwwroot\lib\vue\widgets\vue.widgets.prompt.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="wwwroot\lib\bootstrap\LICENSE" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css" />
+    <None Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <None Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
+    <None Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <None Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css" />
+    <None Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <None Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css" />
+    <None Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <None Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+    <None Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css" />
+    <None Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <None Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+    <None Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+    <None Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <None Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+    <None Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+    <None Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+    <None Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <None Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+    <None Remove="wwwroot\lib\bootstrap\LICENSE" />
+    <None Remove="wwwroot\lib\jquery\dist\jquery.js" />
+    <None Remove="wwwroot\lib\jquery\dist\jquery.min.js" />
+    <None Remove="wwwroot\lib\jquery\dist\jquery.min.map" />
+    <None Remove="wwwroot\lib\jquery\LICENSE.txt" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,335 @@
+﻿@page "{handler?}"
+@model TranslateModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+@using System.Globalization
+
+@inject IViewLocalizer L
+@{
+    ViewData["Title"] = "UniLocalizer translator";
+
+    List<SelectListItem> culturesSelectList = new List<SelectListItem>();
+
+    culturesSelectList.Add(new SelectListItem("-all-", "all"));
+    culturesSelectList.AddRange(
+            Model.
+            SupportedCultures.
+            Select(c => new SelectListItem { Value = c.Name, Text = c.TwoLetterISOLanguageName })
+            .ToList()
+        );
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Translation page</title>
+    <environment include="Development">
+        <link rel="stylesheet" type="text/css" href="~/lib/bootstrap/flavours/cosmo/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="~/lib/toastr/toastr.css" />
+        <link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.css" />
+        <link rel="stylesheet" type="text/css" href="~/lib/preloader/preloader.css" />
+        <link rel="stylesheet" type="text/css" href="~/lib/fontawesome/css/all.css" />
+        <link rel="stylesheet" type="text/css" href="~/lib/datatables/xtech.datatables.extensions.css">
+        <link rel="stylesheet" type="text/css" href="~/css/custom.css" />
+
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/vue/vue.js"></script>
+        <script src="~/lib/preloader/preloader.js"></script>
+        <script src="~/lib/datatables/datatables.js"></script>
+        <script src="~/lib/datatables/xtech.datatables.extensions.js"></script>
+        <script src="~/lib/datatables/xtech.datatables.editor.js"></script>
+        <script src="~/lib/datatables/plugins/datetime/datetime.js"></script>
+        <script src="~/lib/jszip/jszip.js"></script> @*required by ~/lib/datatables/plugins/buttons/buttons.html5.js*@
+        <script src="~/lib/datatables/plugins/buttons/buttons.html5.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    </environment>
+</head>
+<body>
+    <div class="container-fluid pt-3" data-xt-container="">
+        <div class="row">
+            <div class="col-lg-10">
+                <h3 class="mb-0">Translator View</h3>
+            </div>
+            <div class="col-lg-2">
+                @{
+                    var changeCultureUrl = Url.Page("/Translate", new { area = "Localizer" });
+                }
+                <form id="languagePicker" action="@changeCultureUrl" method="get" role="form">
+                    <select class="form-control" name="culture" asp-for="@Model.FilteredCulture.Name" asp-items="culturesSelectList" onchange="this.form.submit()"></select>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="localizer_table" class="table1 table-striped table-bordered hidden"></table>
+            </div>
+        </div>
+    </div>
+    <script>
+        Preloader.show();
+        $(function (c) {
+            var data = [
+                @foreach (var item in Model.FilteredTranslationItems.Values)
+                {
+                <text>
+                {
+                    generalKey: "@item.GeneralKey.ToJsString()",
+                    text: "@item.Value.ToJsString()" @*Escape quotes*@
+                },
+                </text>
+                }
+            ];
+            var viewData = {
+                dataTable: {
+                    api: undefined
+                },
+                dialogs: {
+                    saveToFile: function () {
+                        var dialogConfig = {
+                            title: "Please confirm",
+                            body: "",
+                            buttons: {
+                                ok: {
+                                    text: "YES",
+                                    cssClass: "btn-primary",
+                                    reason: "ok"
+                                },
+                                cancel: {
+                                    text: "Cancel",
+                                    cssClass: "btn-link",
+                                    reason: "cancel"
+                                }
+                            },
+                            cssClass: 'modal-md',
+                            onHide: function (result) {
+                                if (result === "ok") {
+                                    Preloader.show()
+                                    var filteredCulture = $("#FilteredCulture_Name").val();
+                                    if (filteredCulture === "all") {
+                                        var url = '@Url.Page("/Index","WriteLanguageResources")';
+                                    }
+                                    else {
+                                        var url = '@Url.Page("/Index","WriteLanguageResources")?cultureName=' + filteredCulture;
+                                    }
+
+                                    $.post(url).done(function (response) {
+                                        Preloader.hide();
+                                        if (response.status !== "ok") {
+                                            alert("An error occured!");
+                                        }
+                                        dialog.close();
+                                        location.reload();
+                                    }).fail(function (xhr, status, error) {
+                                        Preloader.hide();
+                                        alert("An error occured: " + error);
+                                    });
+                                } 
+                            }
+                        };
+
+                        dialogConfig.body = "Transaltions for selected languages will be overwritten inside application files.<br /><br />";
+
+                        dialogConfig.body += "Are you sure to do that?<br />";
+
+                        VuePrompt.show(dialogConfig);
+                    },
+                    loadFromFile: function () {
+                        var dialogConfig = {
+                            title: "Please confirm",
+                            message: "All unsaved changes will be lost. Are your sure to load translations from files?",
+                            buttons: {
+                                ok: {
+                                    text: "YES",
+                                    cssClass: "btn-primary",
+                                    reason: "ok"
+                                },
+                                cancel: {
+                                    text: "Cancel",
+                                    cssClass: "btn-link",
+                                    reason: "cancel"
+                                }
+                            },
+                            cssClass: 'modal-md',
+                            onHide: function(result) {
+                                if (result === "ok") {
+                                    Preloader.show()
+                                    var url = '@Url.Page("/Index", "ReloadLanguageResources")';
+                                    $.post(url).done(function (response) {
+                                        //Preloader.hide();
+                                        if (response.status !== "ok") {
+                                            alert("An error occured!");
+                                        }
+                                        window.location.reload();
+                                    }).fail(function (xhr, status, error) {
+                                        Preloader.hide();
+                                        alert("An error occured: " + error);
+                                    });
+                                } else if (result === "cancel") {
+                                    dialog.close();
+                                }
+
+                            }
+                        };
+
+                        VuePrompt.show(dialogConfig);
+                    }
+                }
+            };
+            var config = {
+                columns: [
+                    {
+                        data: 'generalKey',
+                        title: 'generalKey',
+                        name: 'generalKey',
+                        width: '500px',
+                        isHeightIndicator: true,
+                        render: dataTableCellWrapper(
+                            function (value, type, row) {
+                                if (type === 'display') {
+                                    var encodedDesc = $.fn.dataTable.utils.htmlEncode(value);
+                                    var output = {
+                                        result: encodedDesc
+                                    };
+                                    return output;
+                                }
+                                return value;
+                            })
+                    },
+                    {
+                        data: 'text',
+                        title: 'text',
+                        name: 'text',
+                        width: '600px',
+                        isHeightIndicator: true,
+                        render: dataTableCellWrapper(
+                            function (value, type, row) {
+                                if (type === 'display') {
+                                    var encodedDesc = $.fn.dataTable.utils.htmlEncode(value);
+                                    var output = {
+                                        result: encodedDesc
+                                    };
+                                    return output;
+                                }
+                                return value;
+                            }),
+                        editor: (function () {
+                            return {
+                                type: 'text',
+                                onSave: function (editedValue, rowData, onSuccess, onError) {
+                                    onSuccess("ok");
+                                    var url = '@Url.Page("/Index","UpdateLocalizerItem")';
+                                        $.ajax({
+                                            type: "POST",
+                                            url: url,
+                                            data: {
+                                                generalKey: rowData.generalKey,
+                                                value: editedValue
+                                            },
+                                            success: function (response) {
+                                                if (response.status === "ok") {
+                                                    onSuccess();
+                                                } else {
+                                                    onError(response.reason);
+                                                }
+                                            },
+                                            error: function (response) {
+                                                onError(response);
+                                            }
+                                        });
+                                }
+                            };
+                        })()
+                    }
+                ]
+            }
+            var $table = $("#localizer_table");
+            $table.DataTable({
+                data: data,
+                deferRender: true,
+                stateSave: true,
+                search: true,
+                responsive: false,
+                pageLength: 100,
+                processing: true,
+                autoWidth: false,
+                // see: https://datatables.net/release-datatables/examples/basic_init/dom.html
+                dom:
+                    "<'row mb-2'<'col-sm-12 dataTables_ButtonHeader'Bfl><'#filterBox.col-sm-12'>>" +
+                    "<'row'<'col-sm-12'<'#tableContainer'<'#fixedHeader'><'#scrollContainer'tr>>>>" +
+                    "<'row mt-2'<'col-sm-5'i><'col-sm-7'p>>",
+                //select: config.select,
+                columns: config.columns,
+                buttons: [
+                    {
+                        text: '<i class="fas fa-save"></i> Save to files',
+                        action: function (e, dt) {
+                            viewData.dialogs.saveToFile();
+                        },
+                        className: 'btn btn-outline-secondary'
+                    },
+                    {
+                        text: '<i class="fas fa-sync-alt"></i> Reload from files',
+                        action: function (e, dt) {
+                            viewData.dialogs.loadFromFile();
+                        },
+                        className: 'btn btn-outline-secondary'
+                    },
+                    {
+                        extend: 'copy',
+                        className: 'btn btn-outline-secondary'
+                    },
+                    {
+                        extend: 'excel',
+                        className: 'btn btn-outline-secondary'
+                    },
+                ],
+                ordering: true,
+                orderMulti: false,
+                order: [[0, 'asc']],
+                rowLines: 0,
+                initComplete: function (settings, json) {
+                    var api = this.api();
+                    var $table = $(api.table().node());
+                    viewData.dataTable.api = api;
+                    dataTableSetHeight();
+                    Preloader.hide();
+                    $table.on("editor-beforeSave.dt", function () {
+                        Preloader.show({
+                            delay: 500
+                        });
+                    });
+                    $table.on("editor-saveSuccess.dt", function (e, response, editedValue, rowData, api) {
+                        Preloader.hide();
+                    });
+                    $table.on("editor-saveError.dt", function (e, response, editedValue, rowData, api) {
+                        Preloader.hide();
+
+                        toastMessage = "<b>Save failed</b> Please contact system administrator for assistnace";
+                        XT.Effects.toast(toastMessage, "error", "top-center", undefined, 10000);
+                        console.log({ response: response });
+                        throw response;
+                    });
+                }
+            });
+
+            function dataTableCellWrapper(baseRenderer, options) {
+                return $.fn.dataTable.render.cellWrapper(baseRenderer);
+            }
+
+            function dataTableSetHeight() {
+                var tableHeight = $(window).height() - $('#scrollContainer').offset().top - 80;
+                if (tableHeight > 300) {
+                    $('#scrollContainer').css('height', tableHeight);
+                }
+            }
+        });
+    </script>
+    <div vue-instance="prompt"></div>
+    <script src="~/lib/vue/widgets/vue.widgets.prompt.js"></script>
+</body>
+</html>

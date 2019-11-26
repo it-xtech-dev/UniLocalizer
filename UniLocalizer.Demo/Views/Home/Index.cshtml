@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using UniLocalizer
+
+@inject IViewLocalizer L
+
+@{
+    ViewData["Title"] = @L["page_title"];
+}
+
+<div class="text-center">
+    <h1 class="display-4">@L["header_welcome"]</h1>
+    <p>@L["paragraph_learn"]</p>
+    <button onclick="alert(locale.getScope('javascript.alert-demo').get('alert_test'))">@L["button_javascript_test_caption"]</button>
+    @L["new_test"]
+</div>
+@Html.JsLocalizer(
+    "views.home.index",
+    "javascript.alert-demo"
+)
+

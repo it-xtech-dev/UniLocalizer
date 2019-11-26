@@ -1,0 +1,4 @@
+﻿https://andrewlock.net/adding-localisation-to-an-asp-net-core-application/
+https://riptutorial.com/asp-net-c
+https://github.com/rwwilden/AspNet5Localization/tree/develop
+https://ronaldwildenberg.com/asp-net-core-localization-with-json-resource-files/

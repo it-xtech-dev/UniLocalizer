@@ -1,0 +1,6 @@
+﻿How to use UniLocalizer library?
+----------------------------------
+0. Add reference to UniLocalizer (TODO: provide details how to add reference from NuGet)
+1. Configure Startup.cs => See comments in Startup.cs
+2. Add language selector partial => ~/Views/Shared/_LanguageSelector, and use it inside _Layout.cshtml
+3. Provide tokenization inside view (see: ~/View/Home/Index.cshtml)

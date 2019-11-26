@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniLocalizer", "UniLocalizer\UniLocalizer.csproj", "{EB80E497-D12F-44D2-BE96-1778DB77FF13}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniLocalizer.Demo", "UniLocalizer.Demo\UniLocalizer.Demo.csproj", "{A3895D32-6E00-4225-8A0C-9817256E4E0E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB80E497-D12F-44D2-BE96-1778DB77FF13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB80E497-D12F-44D2-BE96-1778DB77FF13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB80E497-D12F-44D2-BE96-1778DB77FF13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB80E497-D12F-44D2-BE96-1778DB77FF13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3895D32-6E00-4225-8A0C-9817256E4E0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3895D32-6E00-4225-8A0C-9817256E4E0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3895D32-6E00-4225-8A0C-9817256E4E0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3895D32-6E00-4225-8A0C-9817256E4E0E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CC0C3542-0D34-46F7-9AD8-0441246ACD95}
+	EndGlobalSection
+EndGlobal

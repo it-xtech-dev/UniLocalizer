@@ -1,0 +1,11 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer L
+
+
+@{
+    ViewData["Title"] = L["page_title"];
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>@L["paragraph_mockup"]</p>

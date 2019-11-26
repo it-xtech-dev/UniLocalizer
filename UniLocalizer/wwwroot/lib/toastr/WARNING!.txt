@@ -1,0 +1,2 @@
+toastr.js has been modified - added .primary notification which is the theme color!
+PK: changed hove behaviour
