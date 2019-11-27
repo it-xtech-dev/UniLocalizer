@@ -25,7 +25,7 @@ namespace UniLocalizer.Pages
         /// <param name="culture">The culture to be set.</param>
         /// <param name="returnUrl">The return parameter to be set.</param>
         /// <returns></returns>
-        public LocalRedirectResult OnPostSetLanguage(string culture, string returnUrl)
+        public LocalRedirectResult OnGetSetLanguage(string culture, string returnUrl)
         {
             Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,

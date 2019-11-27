@@ -26,28 +26,21 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Translation page</title>
-    <environment include="Development">
-        <link rel="stylesheet" type="text/css" href="~/lib/bootstrap/flavours/cosmo/bootstrap.css" />
-        <link rel="stylesheet" type="text/css" href="~/lib/toastr/toastr.css" />
-        <link rel="stylesheet" type="text/css" href="~/lib/datatables/datatables.css" />
-        <link rel="stylesheet" type="text/css" href="~/lib/preloader/preloader.css" />
-        <link rel="stylesheet" type="text/css" href="~/lib/fontawesome/css/all.css" />
-        <link rel="stylesheet" type="text/css" href="~/lib/datatables/xtech.datatables.extensions.css">
-        <link rel="stylesheet" type="text/css" href="~/css/custom.css" />
-
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/vue/vue.js"></script>
-        <script src="~/lib/preloader/preloader.js"></script>
-        <script src="~/lib/datatables/datatables.js"></script>
-        <script src="~/lib/datatables/xtech.datatables.extensions.js"></script>
-        <script src="~/lib/datatables/xtech.datatables.editor.js"></script>
-        <script src="~/lib/datatables/plugins/datetime/datetime.js"></script>
-        <script src="~/lib/jszip/jszip.js"></script> @*required by ~/lib/datatables/plugins/buttons/buttons.html5.js*@
-        <script src="~/lib/datatables/plugins/buttons/buttons.html5.js"></script>
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    </environment>
+        <link rel="stylesheet" type="text/css" href="~/localizer-assets/lib/bootstrap/flavours/cosmo/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="~/localizer-assets/lib/toastr/toastr.css" />
+        <link rel="stylesheet" type="text/css" href="~/localizer-assets/lib/datatables/datatables.css" />
+        <link rel="stylesheet" type="text/css" href="~/localizer-assets/lib/preloader/preloader.css" />
+        <link rel="stylesheet" type="text/css" href="~/localizer-assets/lib/datatables/xtech.datatables.extensions.css">
+        <link rel="stylesheet" type="text/css" href="~/localizer-assets/css/custom.css" />
+        <script src="~/localizer-assets/lib/jquery/dist/jquery.js"></script>
+        <script src="~/localizer-assets/lib/vue/vue.js"></script>
+        <script src="~/localizer-assets/lib/preloader/preloader.js"></script>
+        <script src="~/localizer-assets/lib/datatables/datatables.js"></script>
+        <script src="~/localizer-assets/lib/datatables/xtech.datatables.extensions.js"></script>
+        <script src="~/localizer-assets/lib/datatables/xtech.datatables.editor.js"></script>
+        <script src="~/localizer-assets/lib/datatables/plugins/datetime/datetime.js"></script>
+        <script src="~/localizer-assets/lib/jszip/jszip.js"></script> @*required by ~/localizer-assets/lib/datatables/plugins/buttons/buttons.html5.js*@
+        <script src="~/localizer-assets/lib/datatables/plugins/buttons/buttons.html5.js"></script>
 </head>
 <body>
     <div class="container-fluid pt-3" data-xt-container="">
@@ -266,14 +259,14 @@
                 columns: config.columns,
                 buttons: [
                     {
-                        text: '<i class="fas fa-save"></i> Save to files',
+                        text: 'Save',
                         action: function (e, dt) {
                             viewData.dialogs.saveToFile();
                         },
                         className: 'btn btn-outline-secondary'
                     },
                     {
-                        text: '<i class="fas fa-sync-alt"></i> Reload from files',
+                        text: 'Reload',
                         action: function (e, dt) {
                             viewData.dialogs.loadFromFile();
                         },
@@ -330,6 +323,6 @@
         });
     </script>
     <div vue-instance="prompt"></div>
-    <script src="~/lib/vue/widgets/vue.widgets.prompt.js"></script>
+    <script src="~/localizer-assets/lib/vue/widgets/vue.widgets.prompt.js"></script>
 </body>
 </html>

@@ -6,11 +6,11 @@
     <Authors>xtech.dev@gmail.com</Authors>
     <Company>xtech.pl</Company>
     <Copyright>xtech.pl</Copyright>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Description>Localize your asp core app with ease. Autogenerate tokes by browsing ui. Translate tokens with simple online editor. See results of your work live - just after refresing the page (no more compiling resource files). Use easy readable json fromat for  translation storage.</Description>
-    <AssemblyVersion>0.9.0.0</AssemblyVersion>
-    <FileVersion>0.9.0.0</FileVersion>
-    <Version>0.9.0</Version>
+    <AssemblyVersion>0.9.3.0</AssemblyVersion>
+    <FileVersion>0.9.3.0</FileVersion>
+    <Version>0.9.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -62,6 +62,31 @@
     <Content Remove="wwwroot\lib\toastr\toastr.css" />
     <Content Remove="wwwroot\lib\toastr\toastr.js" />
     <Content Remove="wwwroot\lib\vue\widgets\vue.widgets.prompt.js" />
+    <Content Remove="wwwroot\localizer-assets\css\custom.css" />
+    <Content Remove="wwwroot\localizer-assets\lib\bootstrap\dist\css\bootstrap-grid.css" />
+    <Content Remove="wwwroot\localizer-assets\lib\bootstrap\dist\css\bootstrap-reboot.css" />
+    <Content Remove="wwwroot\localizer-assets\lib\bootstrap\dist\css\bootstrap-theme.css" />
+    <Content Remove="wwwroot\localizer-assets\lib\bootstrap\dist\css\bootstrap.css" />
+    <Content Remove="wwwroot\localizer-assets\lib\bootstrap\dist\js\bootstrap.js" />
+    <Content Remove="wwwroot\localizer-assets\lib\bootstrap\extensions\bootstrap.switch.css" />
+    <Content Remove="wwwroot\localizer-assets\lib\bootstrap\flavours\cosmo\bootstrap.css" />
+    <Content Remove="wwwroot\localizer-assets\lib\datatables\datatables.css" />
+    <Content Remove="wwwroot\localizer-assets\lib\datatables\datatables.js" />
+    <Content Remove="wwwroot\localizer-assets\lib\datatables\plugins\buttons\buttons.html5.js" />
+    <Content Remove="wwwroot\localizer-assets\lib\datatables\plugins\datetime\datetime.js" />
+    <Content Remove="wwwroot\localizer-assets\lib\datatables\xtech.datatables.editor.js" />
+    <Content Remove="wwwroot\localizer-assets\lib\datatables\xtech.datatables.extensions.css" />
+    <Content Remove="wwwroot\localizer-assets\lib\datatables\xtech.datatables.extensions.js" />
+    <Content Remove="wwwroot\localizer-assets\lib\jquery\dist\jquery.js" />
+    <Content Remove="wwwroot\localizer-assets\lib\jszip\jszip.js" />
+    <Content Remove="wwwroot\localizer-assets\lib\preloader\preloader.css" />
+    <Content Remove="wwwroot\localizer-assets\lib\preloader\preloader.js" />
+    <Content Remove="wwwroot\localizer-assets\lib\toastr\toastr.css" />
+    <Content Remove="wwwroot\localizer-assets\lib\toastr\toastr.js" />
+    <Content Remove="wwwroot\localizer-assets\lib\vue\components\vue.components.select.js" />
+    <Content Remove="wwwroot\localizer-assets\lib\vue\filters\vue.filters.custom.js" />
+    <Content Remove="wwwroot\localizer-assets\lib\vue\vue.js" />
+    <Content Remove="wwwroot\localizer-assets\lib\vue\widgets\vue.widgets.prompt.js" />
   </ItemGroup>
 
   <ItemGroup>

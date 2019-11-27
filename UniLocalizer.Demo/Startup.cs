@@ -53,7 +53,7 @@ namespace UniLocalizer.Demo
 
 
             services
-                .AddMvc()
+                .AddMvc(opt => opt.EnableEndpointRouting = false)
                 // DEMO:
                 // Enable view localization
                 .AddViewLocalization()
