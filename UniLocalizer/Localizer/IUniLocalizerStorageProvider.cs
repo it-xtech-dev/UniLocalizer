@@ -71,9 +71,9 @@ namespace UniLocalizer
         Dictionary<string, string> Get(CultureInfo culture);
 
         /// <summary>
-        /// Adds new resource item to memory cache.
+        /// Tries to add new resource item to localizer cache. When add was unsuccessfull return false;
         /// </summary>
         /// <param name="item">The resource item</param>
-        void Add(ResourceItem item);
+        bool Add(ResourceItem item);
     }
 }

@@ -17,7 +17,7 @@ namespace UniLocalizer
         /// <param name="options">The options</param>
         public UniLocalizerSqlDbProvider(IOptions<UniLocalizerOptions> options, IMemoryCache cache): base(options, cache)
         {
-            this.options = options;
+            this.options = options.Value;
         }
 
         /// <summary>

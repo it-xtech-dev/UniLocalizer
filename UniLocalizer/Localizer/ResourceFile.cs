@@ -17,10 +17,10 @@ namespace UniLocalizer
         /// <param name="path">The resouce file path</param>
         /// <param name="key">The resouce file location key</param>
         /// <param name="content">The resouce file content</param>
-        public ResourceFile(int index, string path, string key, string content)
+        public ResourceFile(int index, string key, string content)
         {
             this.Index = index;
-            this.Path = path;
+            this.RelativePath = GetRelativePath(key);
             this.KeyHashed = ResourceFile.GetKeyHash(key);
             this.Key = key;
             this.content = content;
@@ -40,7 +40,7 @@ namespace UniLocalizer
         /// <summary>
         /// Gets resouce file path;
         /// </summary>
-        public string Path { get; private set; }
+        public string RelativePath { get; }
 
         /// <summary>
         /// Gets hashed resouce file location key.
@@ -92,6 +92,16 @@ namespace UniLocalizer
         public static string GetKeyHash(string key)
         {
             return key.GetHashString();
+        }
+
+        public static string GetRelativePath(string key)
+        {
+            var keySplit = key.Split(":");
+            var culture = keySplit[0];
+            var pathAndFileCore = keySplit[1].Replace(".",@"\");
+            var path = pathAndFileCore + "." + culture + ".json";
+
+            return path;
         }
 
         /// <summary>

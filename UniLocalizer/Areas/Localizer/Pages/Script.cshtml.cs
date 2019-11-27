@@ -40,7 +40,7 @@ namespace UniLocalizer.Pages
         {
             this.Renderer = renderer;
             this.LocalizerFactory = (UniLocalizerFactory)localizerFactory;
-            this.JavascriptNamespace = this.LocalizerFactory.Provider.options.Value.JavascriptNamespace;
+            this.JavascriptNamespace = this.LocalizerFactory.Provider.options.JavascriptNamespace;
             this.IsJavascriptNamespaceGlobal = this.JavascriptNamespace.StartsWith("window");
             this.Cache = cache;
         }
