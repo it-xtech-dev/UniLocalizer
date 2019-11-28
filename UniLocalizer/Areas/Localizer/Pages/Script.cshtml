@@ -110,7 +110,8 @@
          * */
         Locale.view = (function () {
             var viewKeys = Object.keys(Locale.scopes).filter(function (key) {
-                return key.substring(0, 6).toLowerCase() === "views.";
+                var pathKey = key.substring(0, 6).toLowerCase();
+                return pathKey === "views." || pathKey === "pages.";
             });
 
             if (viewKeys[0]) return Locale.getScope(viewKeys[0]);
