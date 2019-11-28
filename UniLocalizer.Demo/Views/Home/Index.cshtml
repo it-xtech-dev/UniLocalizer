@@ -11,6 +11,7 @@
     <h1 class="display-4">@L["header_welcome"]</h1>
     <p>@L["paragraph_learn"]</p>
     <button onclick="alert(locale.getScope('javascript.alert-demo').get('alert_test'))">@L["button_javascript_test_caption"]</button>
-    @L["new_test"]
+    <input class="form-control" value="Hello world!" id="test-input"/>
+    <button onclick="alert(locale.getScope('javascript.alert-demo').get('alert_test_placeholder', $('#test-input').val()))">@L["button_javascript_test_with_placeholder_caption"]</button>
 </div>
-@Html.JsLocalizer(null)
+@Html.JsLocalizer("javascript.alert-demo")

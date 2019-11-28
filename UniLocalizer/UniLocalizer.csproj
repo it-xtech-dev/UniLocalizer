@@ -8,9 +8,9 @@
     <Copyright>xtech.pl</Copyright>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Description>Localize your asp core app with ease. Autogenerate tokes by browsing ui. Translate tokens with simple online editor. See results of your work live - just after refresing the page (no more compiling resource files). Use easy readable json fromat for  translation storage.</Description>
-    <AssemblyVersion>0.9.7.1</AssemblyVersion>
-    <FileVersion>0.9.7.1</FileVersion>
-    <Version>0.9.7.1</Version>
+    <AssemblyVersion>0.9.8</AssemblyVersion>
+    <FileVersion>0.9.8</FileVersion>
+    <Version>0.9.8</Version>
   </PropertyGroup>
 
   <ItemGroup>

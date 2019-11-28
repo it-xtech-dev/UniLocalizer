@@ -131,12 +131,14 @@ namespace UniLocalizer
                     this.LoadedFiles.TryAdd(fileKeyHash, file);
                 }
                 var item = new ResourceItem(culture, resourceLocationKey, itemKey, null, file);
-                // trigger resource modification for change tracking.
-                item.Value = AUTO_GEN;
-                localizedString = item.Value;
                 // TODO: use Logger to log when add was unsuccessfull.
                 // There might be some issues realted to multithreading.
                 this.Add(item);
+
+                // trigger resource modification for change tracking.
+                item.Value = AUTO_GEN;
+                localizedString = item.Value;
+
             }
             if (localizedString == null)
             {

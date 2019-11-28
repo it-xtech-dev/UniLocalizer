@@ -90,9 +90,12 @@ namespace UniLocalizer
                 filesToSave = filesToSave.Where(f => f.Key.StartsWith(cultureName));
             }
 
+            // limit list only to files that has been modified
+            filesToSave = this.ItemList.Values.Where(i => i.IsModified).Select(i => i.File).Distinct();
+
+            // iterate over the files and write them to storage
             filesToSave.ToList().ForEach( file => {
-                // when no changes detected skip data saving.
-                var fileItems = this.ItemList.Values.Where(i => i.IsModified && i.GeneralKey.StartsWith(file.Key));
+                var fileItems = this.ItemList.Values.Where(i => i.GeneralKey.StartsWith(file.Key));
                 
                 if (fileItems.Any())
                 {

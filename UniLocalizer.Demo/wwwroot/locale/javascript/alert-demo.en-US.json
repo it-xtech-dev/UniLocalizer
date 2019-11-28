@@ -1,3 +1,4 @@
 {
-  "alert_test": "This is localized javascript alert test for english language version."
+  "alert_test": "This is localized javascript alert test for english language version.",
+  "alert_test_placeholder": "Input value is '{0}'."
 }

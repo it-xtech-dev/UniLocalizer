@@ -1,3 +1,3 @@
-﻿{
-  "alert_test": "To jest testowy tekst javascript alert dla polskiej wersji językowej."
+{
+  "alert_test_placeholder": "I just want to say {0}"
 }
