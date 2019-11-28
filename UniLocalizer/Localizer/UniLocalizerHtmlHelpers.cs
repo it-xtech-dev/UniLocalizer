@@ -33,10 +33,12 @@ namespace UniLocalizer
         /// Renders script tags containg resouces for given file location
         /// </summary>
         /// <param name="helper">The helper instance.</param>
-        /// <param name="fileResourceKeys">Pipe | separated relative file paths splited with dots path1.path2.filename</param>
+        /// <param name="fileResourceKeys">Resource location key (path separated with dots) path1.path2.filename. Use null reference current view / page resource.</param>
         /// <returns>Html string containing script tag.</returns>
         public static HtmlString JsLocalizer(this IHtmlHelper helper, params string[] fileResourceKeys)
         {
+            //helper.ViewContext.ExecutingFilePath;
+
             var context = helper.ViewContext.HttpContext;
             IMemoryCache cache = context.RequestServices.GetRequiredService<IMemoryCache>();
             UniLocalizerFactory localizerFactory = (UniLocalizerFactory)context.RequestServices.GetRequiredService<IStringLocalizerFactory>();
@@ -46,11 +48,26 @@ namespace UniLocalizer
             var culture = CultureInfo.CurrentCulture;
             
             var filesQuery = new List<int>();
+
+            if (fileResourceKeys == null)
+            {
+                fileResourceKeys = new string[1];
+                fileResourceKeys[0] = ResolveKeyFromCurrentView();
+            }
+
             fileResourceKeys.ToList().ForEach(key => {
+                if (key == null)
+                {
+                    key = ResolveKeyFromCurrentView();
+                }
+
                 var resourceFileKey = culture.Name + ":." + key + ":";
                 // load from cache?
-                var file = localizerFactory.Provider.LoadedFiles[resourceFileKey.GetHashString()];
-                if (file == null) throw new Exception($"Unrecognized resource '{ resourceFileKey }'");
+                
+                if (!localizerFactory.Provider.LoadedFiles.TryGetValue(resourceFileKey.GetHashString(), out var file))
+                {
+                    throw new Exception($"Unrecognized resource '{ resourceFileKey }'. Please add file to storage first.");
+                }
                 filesQuery.Add(file.Index);
             });
 
@@ -73,6 +90,14 @@ namespace UniLocalizer
 
             // todo: add file checksum
             return new HtmlString(String.Format($"<script src='{scriptResourceLink}'></script>"));
+
+            string ResolveKeyFromCurrentView()
+            {
+                var pathKey = helper.ViewContext.ExecutingFilePath.Replace(@".cshtml", "").Replace(@"/", ".").ToLower();
+                var key = pathKey.Substring(1);
+
+                return key;
+            }
         }
 
         /// <summary>
