@@ -2,3 +2,12 @@
 https://riptutorial.com/asp-net-c
 https://github.com/rwwilden/AspNet5Localization/tree/develop
 https://ronaldwildenberg.com/asp-net-core-localization-with-json-resource-files/
+
+Todos:
+1. Use methods standarized do parse and create resource keys.
+2. Refactor caching and simplify with usage of objects for cache entry (JavascriptBundle.cs)
+3. 
+
+Ideas:
+1. Usage stats
+2. Json import / export.

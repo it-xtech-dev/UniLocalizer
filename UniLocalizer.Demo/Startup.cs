@@ -10,10 +10,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using UniLocalizer;
+using UniLocalizer.Demo.Models;
 
 namespace UniLocalizer.Demo
 {
@@ -29,6 +31,8 @@ namespace UniLocalizer.Demo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AppDbContext>(item => item.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             // DEMO:
             // Register uni localizer as localization service with some settings
             // below configuration is json based provider:
@@ -40,7 +44,9 @@ namespace UniLocalizer.Demo
                 opt.JavascriptNamespace = "locale";
                 opt.IsTranslatorEnabled = true;
                 opt.TraslatorUserRole = null;
-            });
+            },
+            Configuration.GetConnectionString("DefaultConnection")
+            );
 
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -101,7 +107,7 @@ namespace UniLocalizer.Demo
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

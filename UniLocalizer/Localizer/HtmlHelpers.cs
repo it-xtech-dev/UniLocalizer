@@ -27,7 +27,7 @@ namespace UniLocalizer
     /// Provides UniLocalizer HtmlHelpers
     /// TODO: Do not depend on controller / action architected. Move to "module" resouce serving solution for javascript.
     /// </summary>
-    public static class UniLocalizerHtmlHelpers
+    public static class HtmlHelpers
     {
         /// <summary>
         /// Renders script tags containg resouces for given file location
@@ -62,16 +62,31 @@ namespace UniLocalizer
                 }
 
                 var resourceFileKey = culture.Name + ":." + key + ":";
-                // load from cache?
                 
+                // try to find file inside loaded files.
                 if (!localizerFactory.Provider.LoadedFiles.TryGetValue(resourceFileKey.GetHashString(), out var file))
                 {
-                    throw new Exception($"Unrecognized resource '{ resourceFileKey }'. Please add file to storage first.");
+                    if (localizerFactory.Options.IsTranslatorEnabled
+                        && localizerFactory.Options.AutogenerateMissingKeys)
+                    {
+                        // allow empty file when autogeneration mode is enabled.
+                    }
+                    else
+                    {
+                        throw new Exception($"Unrecognized resource '{ resourceFileKey }'. Please add file to storage first.");
+                    }
+                } 
+                else
+                {
+                    filesQuery.Add(file.Index);
                 }
-                filesQuery.Add(file.Index);
             });
 
-            if (!filesQuery.Any()) throw new Exception("No resource key specified. Please specifiy at least one resource key.");
+            if (!filesQuery.Any())
+            {
+                new HtmlString($"<!-- JsLocalizer: Non of specified locationKey's cannot be matched with existing resource. Please specifiy at least one key for existing resource. -->");
+            }
+            //throw new Exception("No resource key specified. Please specifiy at least one resource key.");
 
             var fileList = filesQuery.OrderBy(f => f).ToList();
             var cacheItemVersionKey = $"Localizer_Script_{ string.Join("_", fileList) }_Hash";
@@ -89,7 +104,7 @@ namespace UniLocalizer
             var scriptResourceLink = urlHelper.Page("/Script", new { area = "Localizer", f = fileList, v = cacheItemVersion/*, debug = true */});
 
             // todo: add file checksum
-            return new HtmlString(String.Format($"<script src='{scriptResourceLink}'></script>"));
+            return new HtmlString($"<script src='{scriptResourceLink}'></script>");
 
             string ResolveKeyFromCurrentView()
             {

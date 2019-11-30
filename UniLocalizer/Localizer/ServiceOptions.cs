@@ -7,9 +7,9 @@ namespace UniLocalizer
     /// <summary>
     /// Provides localizer options.
     /// </summary>
-    public class UniLocalizerOptions : LocalizationOptions
+    public class ServiceOptions : LocalizationOptions
     {
-        public UniLocalizerOptions()
+        public ServiceOptions()
         {
         }
 

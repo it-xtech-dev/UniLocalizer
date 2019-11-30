@@ -10,8 +10,8 @@
 <div class="text-center">
     <h1 class="display-4">@L["header_welcome"]</h1>
     <p>@L["paragraph_learn"]</p>
-    <button onclick="alert(locale.getScope('javascript.alert-demo').get('alert_test'))">@L["button_javascript_test_caption"]</button>
-    <input class="form-control" value="Hello world!" id="test-input"/>
-    <button onclick="alert(locale.getScope('javascript.alert-demo').get('alert_test_placeholder', $('#test-input').val()))">@L["button_javascript_test_with_placeholder_caption"]</button>
+    <button class="btn btn-secondary mt-2" onclick="alert(locale.getScope('javascript.alert-demo').get('alert_test'))">@L["button_javascript_test_caption"]</button>
+    <input class="form-control mt-2" value="Hello world!" id="test-input"/>
+    <button class="btn btn-primary mt-2" onclick="alert(locale.getScope('javascript.alert-demo').get('alert_test_placeholder', $('#test-input').val()))">@L["button_javascript_test_with_placeholder_caption"]</button>
 </div>
 @Html.JsLocalizer("javascript.alert-demo")

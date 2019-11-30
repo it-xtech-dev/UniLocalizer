@@ -40,7 +40,7 @@ namespace UniLocalizer.Pages
         {
             this.Renderer = renderer;
             this.LocalizerFactory = (UniLocalizerFactory)localizerFactory;
-            this.JavascriptNamespace = this.LocalizerFactory.Provider.options.JavascriptNamespace;
+            this.JavascriptNamespace = this.LocalizerFactory.Provider.Options.JavascriptNamespace;
             this.IsJavascriptNamespaceGlobal = this.JavascriptNamespace.StartsWith("window");
             this.Cache = cache;
         }
@@ -98,8 +98,8 @@ namespace UniLocalizer.Pages
                 throw new Exception("Dynamic content produced by viewResult is expected to be wrapped in <script> tag");
 
             var opts = new MemoryCacheEntryOptions();
-            opts.AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(365);
-
+            opts.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(24);
+            opts.SetSlidingExpiration(TimeSpan.FromMinutes(10));
 
             // add file dependency to cached data
             this.RequestedResourceFiles.ForEach(file =>

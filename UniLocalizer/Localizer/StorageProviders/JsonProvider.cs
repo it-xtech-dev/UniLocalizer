@@ -7,19 +7,19 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace UniLocalizer
+namespace UniLocalizer.Providers
 {
 
     /// <summary>
     /// Provides localizer json resource provider.
     /// </summary>
-    public class UniLocalizerJsonProvider: UniLocalizerBaseProvider, IUniLocalizerStorageProvider
+    public class JsonProvider: BaseProvider, IStorageProvider
     {
         /// <summary>
         /// Creates new instance of provider class.
         /// </summary>
         /// <param name="options">The options</param>
-        public UniLocalizerJsonProvider(IOptions<UniLocalizerOptions> options, IMemoryCache cache) : base(options, cache)
+        public JsonProvider(ServiceOptions options, IMemoryCache cache) : base(options, cache)
         {
             this.LoadResources(base.resourceRootPath);
         }
@@ -62,7 +62,7 @@ namespace UniLocalizer
                 items.ToList().ForEach(i =>
                 {
                     var item = new ResourceItem(culture, resourceLocationKey, i.Key, i.Value, resourceFile);
-                    this.Add(item);
+                    this.AddResourceItem(item);
                 });
 
                 index++;
@@ -76,14 +76,14 @@ namespace UniLocalizer
         /// Writes all resource from memory to json files. Performs save oparation according to cultureName and resourceFileKey
         /// </summary>
         /// <param name="cultureName">Saves files only with specified culture. The culture name is 5 letter formatted string: (ex: en-US). Use null to bypass this condition.</param>
-        /// <param name="resourceFileKey">Saves files only with specified resource file key (location). The value should be resourceFileKey pattern like data.filename -> data/filename.{culture.name}.json. Use null to bypass this condition.</param>
-        public void WriteResources(string cultureName = null, string resourceFileKey = null)
+        /// <param name="locationKey">Saves files only with specified resource file key (location). The value should be resourceFileKey pattern like data.filename -> data/filename.{culture.name}.json. Use null to bypass this condition.</param>
+        public void WriteResources(string cultureName = null, string locationKey = null)
         {
             IEnumerable<ResourceFile> filesToSave = this.LoadedFiles.Values;
             
-            if (resourceFileKey != null)
+            if (locationKey != null)
             {
-                filesToSave = filesToSave.Where(f => f.Key == resourceFileKey);
+                filesToSave = filesToSave.Where(f => f.Key.EndsWith(locationKey));
             }
             if (cultureName != null)
             {
@@ -102,7 +102,7 @@ namespace UniLocalizer
                     var fileItemsDictionary = fileItems.OrderBy(i => i.Key).ToDictionary(i => i.Key, i => i.Value);
                     var json = JsonConvert.SerializeObject(fileItemsDictionary, Formatting.Indented);
 
-                    var filePath = options.ResourcesPath + file.RelativePath;
+                    var filePath = base.Options.ResourcesPath + file.RelativePath;
                     File.WriteAllText(filePath, json);
 
                     // reset modification indicator.
@@ -112,10 +112,11 @@ namespace UniLocalizer
         }
 
         /// <summary>
-        /// Reloads all resources form files.
+        /// Reloads all resources from files.
         /// </summary>
         public void Reload()
         {
+            // WARNING: Possible hole: clearing the resources probabbly will not release application cache
             base.Clear();
             this.LoadResources(this.resourceRootPath);
         }

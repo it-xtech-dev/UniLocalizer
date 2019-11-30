@@ -23,7 +23,7 @@ namespace UniLocalizer
         {
             this.Culture = culture;
             //this.ResourceFilePath = resourceFilePath;
-            this.ResourceLocationKey = resourceLocationKey;
+            this.LocationKey = resourceLocationKey;
             this.Key = key;
             this.File = file;
             // do not trigger modification when resource item is initially created.
@@ -59,14 +59,14 @@ namespace UniLocalizer
         {
             get
             {
-                return this.Culture.Name + ":" + this.ResourceLocationKey + ":" + this.Key;
+                return GetGeneralKey(this.Culture, this.LocationKey, this.Key);
             }
         }
 
         /// <summary>
         /// Gets resource file location key.
         /// </summary>
-        public string ResourceLocationKey
+        public string LocationKey
         {
             get; private set;
         }
@@ -107,6 +107,27 @@ namespace UniLocalizer
         {
             get; set;
         }
+
+        public static string GetGeneralKey(CultureInfo culture, string locationKey, string resourceKey)
+        {
+            return culture.Name + ":" + locationKey + ":" + resourceKey;
+        }
+
+        public static string GetGeneralKey(string cultureName, string locationKey, string resourceKey)
+        {
+            return cultureName + ":" + locationKey + ":" + resourceKey;
+        }
+
+        public static string GetFileKey(CultureInfo culture, string locationKey)
+        {
+            return culture.Name + ":" + locationKey;
+        }
+
+        public static string GetFileKey(string cultureName, string locationKey)
+        {
+            return cultureName + ":" + locationKey;
+        }
+
 
         /// <summary>
         /// The resource modification event args.

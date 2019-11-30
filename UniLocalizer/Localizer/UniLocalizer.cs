@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-
+using UniLocalizer.Providers;
 
 namespace UniLocalizer
 {
@@ -12,7 +12,7 @@ namespace UniLocalizer
     public class UniLocalizer : IStringLocalizer
     {
        
-        private UniLocalizerJsonProvider provider;
+        private IStorageProvider provider;
         private CultureInfo culture;
         private string resourceLocation;
 
@@ -22,7 +22,7 @@ namespace UniLocalizer
         /// </summary>
         /// <param name="provider">The resource provider.</param>
         /// <param name="resourceLocation">The resource file location key ex. .data.file -> @localeroot/data/file.{culture.name}.json </param>
-        public UniLocalizer(UniLocalizerJsonProvider provider, string resourceLocation)
+        public UniLocalizer(IStorageProvider provider, string resourceLocation)
         {
             this.provider = provider;
             this.culture = CultureInfo.CurrentCulture;
@@ -35,7 +35,7 @@ namespace UniLocalizer
         /// <param name="provider">The resource provider.</param>
         /// <param name="resourceLocation">The resource file location key ex. .data.file -> @localeroot/data/file.{culture.name}.json </param>
         /// <param name="culture">The culture </param>
-        public UniLocalizer(UniLocalizerJsonProvider provider, string resourceLocation, CultureInfo culture)
+        public UniLocalizer(IStorageProvider provider, string resourceLocation, CultureInfo culture)
         {
             this.provider = provider;
             this.resourceLocation = resourceLocation;

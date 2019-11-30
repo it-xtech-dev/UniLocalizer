@@ -20,4 +20,9 @@
     <ProjectReference Include="..\UniLocalizer\UniLocalizer.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\locale\%24dynamic\" />
+  </ItemGroup>
+
 </Project>

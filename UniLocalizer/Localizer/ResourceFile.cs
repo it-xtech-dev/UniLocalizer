@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace UniLocalizer
 {
@@ -19,12 +20,18 @@ namespace UniLocalizer
         /// <param name="content">The resouce file content</param>
         public ResourceFile(int index, string key, string content)
         {
+            var keySplit = key.Split(":");
+            var cultureName = keySplit[0];
+            var location = keySplit[1];
+
             this.Index = index;
-            this.RelativePath = GetRelativePath(key);
             this.KeyHashed = ResourceFile.GetKeyHash(key);
             this.Key = key;
             this.content = content;
             this.IsSynced = true;
+            this.Culture = new CultureInfo(cultureName);
+            this.LocationKey = location;
+            this.RelativePath = GetRelativePath(key);
         }
 
         /// <summary>
@@ -71,6 +78,16 @@ namespace UniLocalizer
             } 
         }
 
+        public CultureInfo Culture
+        {
+            get; private set;
+        }
+
+        public string LocationKey
+        {
+            get; private set;
+        }
+
         /// <summary>
         /// Gets content hashcode.
         /// </summary>
@@ -94,12 +111,10 @@ namespace UniLocalizer
             return key.GetHashString();
         }
 
-        public static string GetRelativePath(string key)
+        public string GetRelativePath(string key)
         {
-            var keySplit = key.Split(":");
-            var culture = keySplit[0];
-            var pathAndFileCore = keySplit[1].Replace(".",@"\");
-            var path = pathAndFileCore + "." + culture + ".json";
+            var pathAndFileCore = this.LocationKey.Replace(".",@"\");
+            var path = pathAndFileCore + "." + this.Culture.Name + ".json";
 
             return path;
         }

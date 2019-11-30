@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using UniLocalizer.Localizer.Model;
+using UniLocalizer.Providers;
 
 namespace UniLocalizer
 {
@@ -16,17 +18,30 @@ namespace UniLocalizer
     /// </summary>
     public class UniLocalizerFactory : IStringLocalizerFactory
     {
-        private readonly UniLocalizerJsonProvider jsonProvider;
-        public readonly UniLocalizerOptions Options;
+        private readonly IStorageProvider provider;
+        public readonly ServiceOptions Options;
 
         /// <summary>
         /// Initializes new instace of localizer factory
         /// </summary>
         /// <param name="options">IoC injected localizer options</param>
-        public UniLocalizerFactory(IOptions<UniLocalizerOptions> options, IMemoryCache cache)
+        public UniLocalizerFactory(IOptions<ServiceOptions> options, IMemoryCache cache, IServiceProvider serviceProvider)
         {
-            this.Options = options.Value; 
-            this.jsonProvider = new UniLocalizerJsonProvider(options, cache);
+            this.Options = options.Value;
+            
+            var dbContext = serviceProvider.GetService<LocalizerDbContext>();
+            if (dbContext != null)
+            {
+                //Where no database context provided use sql db provider
+                this.provider = new SqlDbProvider(options.Value, cache, dbContext);
+            } 
+            else
+            {
+                // Where no database context provided use json provider by default
+                this.provider = new JsonProvider(options.Value, cache);
+
+            }
+
         }
 
         /// <summary>
@@ -38,7 +53,7 @@ namespace UniLocalizer
         {
             var fileResourceKey = "." + resourceSource.FullName.ToLower();
 
-            return new UniLocalizer(this.jsonProvider, fileResourceKey);
+            return new UniLocalizer(this.Provider, fileResourceKey);
         }
 
         /// <summary>
@@ -50,7 +65,7 @@ namespace UniLocalizer
         public IStringLocalizer Create(string baseName, string location)
         {
             var locationKey = new string(baseName.Skip(location.Length).ToArray());
-            return new UniLocalizer(this.jsonProvider, locationKey.ToLower());
+            return new UniLocalizer(this.Provider, locationKey.ToLower());
         }
 
         /// <summary>
@@ -62,15 +77,15 @@ namespace UniLocalizer
         {
             if (!fileResourceKey.StartsWith(".")) fileResourceKey = "." + fileResourceKey;
 
-            return new UniLocalizer(this.jsonProvider, fileResourceKey);
+            return new UniLocalizer(this.Provider, fileResourceKey);
         }
 
         /// <summary>
         /// Gets current instace localizer provider.
         /// </summary>
-        public UniLocalizerJsonProvider Provider
+        public IStorageProvider Provider
         {
-            get { return this.jsonProvider;  }
+            get { return this.provider;  }
         }
     }
 }

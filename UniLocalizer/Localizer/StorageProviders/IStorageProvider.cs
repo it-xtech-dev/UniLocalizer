@@ -11,25 +11,18 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace UniLocalizer
+namespace UniLocalizer.Providers
 {
 
     /// <summary>
     /// Provides localizer json resource provider.
     /// </summary>
-    public interface IUniLocalizerStorageProvider
+    public interface IStorageProvider
     {
-        /// <summary>
-        /// Writes all resource from memory to json files. Performs save oparation according to cultureName and resourceFileKey
-        /// </summary>
-        /// <param name="cultureName">Saves files only with specified culture. The culture name is 5 letter formatted string: (ex: en-US). Use null to bypass this condition.</param>
-        /// <param name="resourceFileKey">Saves files only with specified resource file key (location). The value should be resourceFileKey pattern like data.filename -> data/filename.{culture.name}.json. Use null to bypass this condition.</param>
-        void WriteResources(string cultureName = null, string resourceFileKey = null);
-
-        /// <summary>
-        /// Reloads all resources form files.
-        /// </summary>
-        void Reload();
+        ServiceOptions Options
+        {
+            get;
+        }
 
         /// <summary>
         /// Gets list of currently loaded resource items (tokens).
@@ -48,6 +41,13 @@ namespace UniLocalizer
         }
 
         /// <summary>
+        /// Gets collection of localized strings for given culture.
+        /// </summary>
+        /// <param name="culture">The culture.</param>
+        /// <returns>Dictionary of key / value localized strings.</returns>
+        Dictionary<string, string> Get(CultureInfo culture);
+
+        /// <summary>
         /// Gets localized string for given culture, resource file locatio and resource key.
         /// </summary>
         /// <param name="culture">The culture.</param>
@@ -64,16 +64,17 @@ namespace UniLocalizer
         string Get(string generalKey);
 
         /// <summary>
-        /// Gets collection of localized strings for given culture.
+        /// Writes all resource from memory to json files. Performs save oparation according to cultureName and resourceFileKey
         /// </summary>
-        /// <param name="culture">The culture.</param>
-        /// <returns>Dictionary of key / value localized strings.</returns>
-        Dictionary<string, string> Get(CultureInfo culture);
+        /// <param name="cultureName">Saves files only with specified culture. The culture name is 5 letter formatted string: (ex: en-US). Use null to bypass this condition.</param>
+        /// <param name="resourceFileKey">Saves files only with specified resource file key (location). The value should be resourceFileKey pattern like data.filename -> data/filename.{culture.name}.json. Use null to bypass this condition.</param>
+        void WriteResources(string cultureName = null, string resourceFileKey = null);
+
 
         /// <summary>
-        /// Tries to add new resource item to localizer cache. When add was unsuccessfull return false;
+        /// Clears caches and reloads resources from the storage
         /// </summary>
-        /// <param name="item">The resource item</param>
-        bool Add(ResourceItem item);
+        void Reload();
+
     }
 }
