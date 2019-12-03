@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace UniLocalizer.Localizer.Model
+namespace UniLocalizer.Localizer.Model.Context
 {
     public class LocalizerDbContext : DbContext
     {

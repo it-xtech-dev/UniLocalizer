@@ -1,11 +1,13 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using UniLocalizer.Localizer.Model;
 
-namespace UniLocalizer
+namespace UniLocalizer.Extensions
 {
     /// <summary>
     /// Localization extensions

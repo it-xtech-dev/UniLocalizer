@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Localization;
 using RazorPage.Services;
-using UniLocalizer.Localizer.Model;
+using UniLocalizer.Localizer.Model.Context;
 
 namespace UniLocalizer
 {

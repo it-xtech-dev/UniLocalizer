@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 using UniLocalizer;
+using UniLocalizer.Extensions;
 
 namespace UniLocalizer.Pages
 {

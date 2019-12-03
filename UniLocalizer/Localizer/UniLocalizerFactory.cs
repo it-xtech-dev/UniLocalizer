@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using UniLocalizer.Localizer.Model;
+using UniLocalizer.Localizer.Model.Context;
 using UniLocalizer.Providers;
 
 namespace UniLocalizer

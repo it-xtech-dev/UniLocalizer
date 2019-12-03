@@ -22,6 +22,7 @@ using System.Net.Http.Headers;
 using NUglify;
 using System.Threading;
 using Microsoft.Extensions.Primitives;
+using UniLocalizer.Extensions;
 
 namespace UniLocalizer.Pages
 {

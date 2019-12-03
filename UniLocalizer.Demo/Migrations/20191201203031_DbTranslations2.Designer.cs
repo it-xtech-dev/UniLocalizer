@@ -9,8 +9,8 @@ using UniLocalizer.Demo.Models;
 namespace UniLocalizer.Demo.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191129132928_ColumnRenamingTableNameSpecified")]
-    partial class ColumnRenamingTableNameSpecified
+    [Migration("20191201203031_DbTranslations2")]
+    partial class DbTranslations2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,6 +19,37 @@ namespace UniLocalizer.Demo.Migrations
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("UniLocalizer.Demo.Models.Book", b =>
+                {
+                    b.Property<int>("BookId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Author");
+
+                    b.Property<string>("OriginalTitle");
+
+                    b.HasKey("BookId");
+
+                    b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("UniLocalizer.Demo.Models.BookTranslation", b =>
+                {
+                    b.Property<string>("CultureName")
+                        .HasColumnType("varchar(5)");
+
+                    b.Property<int>("BookId");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("CultureName", "BookId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("BookTranslation");
+                });
 
             modelBuilder.Entity("UniLocalizer.Demo.Models.LocalizerResourceItem", b =>
                 {
@@ -45,6 +76,14 @@ namespace UniLocalizer.Demo.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("LocalizerResourceItem");
+                });
+
+            modelBuilder.Entity("UniLocalizer.Demo.Models.BookTranslation", b =>
+                {
+                    b.HasOne("UniLocalizer.Demo.Models.Book", "Book")
+                        .WithMany("Translations")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

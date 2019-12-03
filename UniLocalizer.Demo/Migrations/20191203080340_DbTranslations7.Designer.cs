@@ -9,8 +9,8 @@ using UniLocalizer.Demo.Models;
 namespace UniLocalizer.Demo.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20191129101153_ColumnRequired")]
-    partial class ColumnRequired
+    [Migration("20191203080340_DbTranslations7")]
+    partial class DbTranslations7
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,13 +20,44 @@ namespace UniLocalizer.Demo.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("UniLocalizer.Demo.Models.Book", b =>
+                {
+                    b.Property<int>("BookId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Author");
+
+                    b.Property<string>("OriginalTitle");
+
+                    b.HasKey("BookId");
+
+                    b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("UniLocalizer.Demo.Models.BookTranslation", b =>
+                {
+                    b.Property<string>("CultureName")
+                        .HasColumnType("varchar(5)");
+
+                    b.Property<int>("BookId");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("CultureName", "BookId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("BookTranslation");
+                });
+
             modelBuilder.Entity("UniLocalizer.Demo.Models.LocalizerResourceItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Culture")
+                    b.Property<string>("CultureName")
                         .IsRequired()
                         .HasColumnType("varchar(5)");
 
@@ -40,11 +71,19 @@ namespace UniLocalizer.Demo.Migrations
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("varchar(200)");
+                        .HasColumnType("varchar(300)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ResourceItems");
+                    b.ToTable("LocalizerResourceItem");
+                });
+
+            modelBuilder.Entity("UniLocalizer.Demo.Models.BookTranslation", b =>
+                {
+                    b.HasOne("UniLocalizer.Demo.Models.Book")
+                        .WithMany("Translations")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

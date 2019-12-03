@@ -8,19 +8,16 @@
     <Copyright>xtech.pl</Copyright>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Description>Localize your asp core app with ease. Autogenerate tokes by browsing ui. Translate tokens with simple online editor. See results of your work live - just after refresing the page (no more compiling resource files). Use easy readable json fromat for  translation storage.</Description>
-    <AssemblyVersion>0.9.9</AssemblyVersion>
-    <FileVersion>0.9.9</FileVersion>
-    <Version>0.9.9</Version>
+    <AssemblyVersion>0.9.10</AssemblyVersion>
+    <FileVersion>0.9.10</FileVersion>
+    <Version>0.9.10</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.6">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="2.2.0" />
     <PackageReference Include="NuGet.CommandLine" Version="5.3.1">
       <PrivateAssets>all</PrivateAssets>
