@@ -35,15 +35,17 @@ namespace UniLocalizer.Pages
         public string JavascriptNamespace;
         public bool IsJavascriptNamespaceGlobal;
         public readonly IMemoryCache Cache;
+        public readonly List<string> SupportedCultures;
 
 
-        public ScriptModel(IRazorToStringRenderer renderer, IStringLocalizerFactory localizerFactory, IMemoryCache cache)
+        public ScriptModel(IRazorToStringRenderer renderer, IStringLocalizerFactory localizerFactory, IMemoryCache cache, IOptions<RequestLocalizationOptions> locOptions)
         {
             this.Renderer = renderer;
             this.LocalizerFactory = (UniLocalizerFactory)localizerFactory;
             this.JavascriptNamespace = this.LocalizerFactory.Provider.Options.JavascriptNamespace;
             this.IsJavascriptNamespaceGlobal = this.JavascriptNamespace.StartsWith("window");
             this.Cache = cache;
+            this.SupportedCultures = locOptions.Value.SupportedCultures.Select( c => c.Name).ToList();
         }
 
         public ActionResult OnGet(List<int> f, bool debug = false)

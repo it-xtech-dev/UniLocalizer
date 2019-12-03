@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using UniLocalizer.Pages;
 using RazorPage.Services;
 using UniLocalizer.Extensions;
+using Microsoft.AspNetCore.Builder;
 
 namespace UniLocalizer
 {
@@ -42,6 +43,8 @@ namespace UniLocalizer
 
             var context = helper.ViewContext.HttpContext;
             IMemoryCache cache = context.RequestServices.GetRequiredService<IMemoryCache>();
+            var locOptions = context.RequestServices.GetRequiredService<IOptions<RequestLocalizationOptions>>();
+            
             UniLocalizerFactory localizerFactory = (UniLocalizerFactory)context.RequestServices.GetRequiredService<IStringLocalizerFactory>();
             var urlHelperFactory = (IUrlHelperFactory)helper.ViewContext.HttpContext.RequestServices.GetService(typeof(IUrlHelperFactory));
             var urlHelper = urlHelperFactory.GetUrlHelper(helper.ViewContext);
@@ -95,7 +98,7 @@ namespace UniLocalizer
             if (cacheItemVersion == null)
             {
                 IRazorToStringRenderer renderer = context.RequestServices.GetRequiredService<IRazorToStringRenderer>();
-                var model = new ScriptModel(renderer, localizerFactory, cache);
+                var model = new ScriptModel(renderer, localizerFactory, cache, locOptions);
 
                 model.ScriptResult(fileList, false);
 

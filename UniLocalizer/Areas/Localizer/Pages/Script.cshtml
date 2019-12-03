@@ -6,6 +6,7 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.Extensions.Localization
 @using System.Globalization
+@using Newtonsoft.Json
 
 @{
     Layout = null;
@@ -30,7 +31,8 @@
         }
 
         if (Object.keys(Locale).length === 0) {
-            Locale.current = '@CultureInfo.CurrentCulture';
+            Locale.currentCulture = '@CultureInfo.CurrentCulture';
+            Locale.supportedCultures = @Html.Raw(JsonConvert.SerializeObject(Model.SupportedCultures));
             Locale.scopes = {};
             Locale.add = function (scopeKey, value) {
                 Locale.scopes[scopeKey] = value;

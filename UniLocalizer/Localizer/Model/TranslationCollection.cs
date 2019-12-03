@@ -76,10 +76,10 @@ namespace UniLocalizer.Localizer.Entity
         }
 
         /// <summary>
-        /// Converts translations into dictionary type list where each translation is represented by key: CultureName + "-" + PropertyName;
+        /// Converts translations into dictionary type list where each translated property is represented by key: CultureName + "-" + PropertyName;
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string,string> ToJsonDictionary()
+        public Dictionary<string, string> ToJsonDictionary(bool retrunNullOnEmpty = false)
         {
             var output = new Dictionary<string, string>();
             foreach (var t in this)
@@ -93,11 +93,18 @@ namespace UniLocalizer.Localizer.Entity
                         var key = t.CultureName + "-" + prop.Name;
                         var value = (string)prop.GetValue(t);
 
-                        output.Add(key, value);
+                        if (value != null)
+                        {
+                            output.Add(key, value);
+                        }
                     }
                 }
             }
 
+            if (!output.Any() && retrunNullOnEmpty)
+            {
+                return null;
+            }
             return output;
         }
     }
