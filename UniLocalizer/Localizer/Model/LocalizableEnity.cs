@@ -18,7 +18,7 @@ namespace UniLocalizer.Localizer.Entity
         } = new TranslationCollection<T>();
 
         /// <summary>
-        /// Gets translation entry for current language
+        /// Gets translation entry for current language.
         /// </summary>
         [NotMapped]
         public T Translated {

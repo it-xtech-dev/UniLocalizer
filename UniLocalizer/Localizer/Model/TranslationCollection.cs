@@ -75,5 +75,30 @@ namespace UniLocalizer.Localizer.Entity
             return this.Any(x => x.CultureName == culture.Name);
         }
 
+        /// <summary>
+        /// Converts translations into dictionary type list where each translation is represented by key: CultureName + "-" + PropertyName;
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string,string> ToJsonDictionary()
+        {
+            var output = new Dictionary<string, string>();
+            foreach (var t in this)
+            {
+                var props = t.GetType().GetProperties();
+                foreach (var prop in props)
+                {
+                    // assumming all string type properties are localized properties
+                    if (prop.Name != "CultureName" && prop.PropertyType.Equals(typeof(string)))
+                    {
+                        var key = t.CultureName + "-" + prop.Name;
+                        var value = (string)prop.GetValue(t);
+
+                        output.Add(key, value);
+                    }
+                }
+            }
+
+            return output;
+        }
     }
 }

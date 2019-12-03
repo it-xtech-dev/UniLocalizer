@@ -76,10 +76,7 @@
                         var args = Array.prototype.slice.call(arguments, 1);
                         if (args.length > 0) {
                             text =  text.replace(/{(\d+)}/g, function(match, number) { 
-                                return typeof args[number] != 'undefined'
-                                ? args[number] 
-                                : match
-                                ;
+                                return typeof args[number] != 'undefined' ? args[number] : match;
                             });
                         }
 
@@ -136,7 +133,7 @@
         <text>
             function _post(url, fromData, onSuccess, onError) {
                 var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = () => {
+                xhr.onreadystatechange = function() {
                     if (xhr.readyState == 4) {
                         if (xhr.status == 200) {
                             onSuccess(xhr);
