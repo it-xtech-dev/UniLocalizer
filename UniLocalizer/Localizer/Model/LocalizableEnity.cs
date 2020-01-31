@@ -12,7 +12,7 @@ namespace UniLocalizer.Localizer.Entity
     public abstract class LocalizableEntity<T> where T : TranslationEntry<T>, new()
     {
 
-        public TranslationCollection<T> Translations { 
+        public virtual TranslationCollection<T> Translations { 
             get; 
             set; 
         } = new TranslationCollection<T>();
@@ -21,7 +21,7 @@ namespace UniLocalizer.Localizer.Entity
         /// Gets translation entry for current language.
         /// </summary>
         [NotMapped]
-        public T Translated {
+        public virtual T Translated {
             get
             {
                 return this.Translations[CultureInfo.CurrentCulture.Name];
