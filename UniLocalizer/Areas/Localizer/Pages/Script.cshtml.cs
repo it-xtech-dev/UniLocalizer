@@ -45,7 +45,7 @@ namespace UniLocalizer.Pages
             this.JavascriptNamespace = this.LocalizerFactory.Provider.Options.JavascriptNamespace;
             this.IsJavascriptNamespaceGlobal = this.JavascriptNamespace.StartsWith("window");
             this.Cache = cache;
-            this.SupportedCultures = locOptions.Value.SupportedUiCultures.Select( c => c.Name).ToList();
+            this.SupportedCultures = locOptions.Value.SupportedCultures.Select( c => c.Name).ToList();
         }
 
         public ActionResult OnGet(List<int> f, bool debug = false)
