@@ -1,1 +1,16 @@
-﻿https://www.learnrazorpages.com/advanced/razor-class-library
+﻿Nuget package publication:
+1. In VS: Project > UniLocalier properties... > Package
+2. Check 'Generate Nuget package on build'
+3. Update package version
+4. Build for release
+5. Check ~\bin\Release for genereated nuget package
+6. Deploy / copy package to nuget repo (i:\Projekty\_NuGet_Storage\)
+
+Consumming pakacge inside other projects:
+1. Add nuget repo
+2. Search for unilocalizer package
+3. Install or update
+
+OTHER:
+About razor pages (incuded into this lib):
+https://www.learnrazorpages.com/advanced/razor-class-library
