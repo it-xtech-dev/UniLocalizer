@@ -1,11 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 
 namespace UniLocalizer.Localizer.Entity
 {
@@ -18,7 +12,7 @@ namespace UniLocalizer.Localizer.Entity
         } = new TranslationCollection<T>();
 
         /// <summary>
-        /// Gets translation entry for current language.
+        /// Gets translation entry for current language. Returns null if translation doesn't exists.
         /// </summary>
         [NotMapped]
         public virtual T Translated {
@@ -27,9 +21,19 @@ namespace UniLocalizer.Localizer.Entity
                 return this.Translations[CultureInfo.CurrentCulture.Name];
             }
         }
+
+        /// <summary>
+        /// Gets translation entry for current language. Creates entry if translation doesn't exists.
+        /// </summary>
+        public virtual T TranslatedOrNew
+        {
+            get
+            {
+                return this.Translations.GetOrCreate(CultureInfo.CurrentCulture.Name);
+            }
+        }
     }
 }
-
 
 /// <summary>
 /// Merges translations between current instance and database existing.

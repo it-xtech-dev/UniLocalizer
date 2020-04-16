@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 
 namespace UniLocalizer.Localizer.Entity
 {
@@ -15,26 +14,11 @@ namespace UniLocalizer.Localizer.Entity
         {
             get
             {
-                var translation = this.FirstOrDefault(x => x.CultureName == culture.Name);
-                if (translation == null)
-                {
-                    translation = new T();
-                    translation.CultureName = culture.Name;
-                    Add(translation);
-                }
-
-                return translation;
+                return this[culture.Name];
             }
             set
             {
-                var translation = this.FirstOrDefault(x => x.CultureName == culture.Name);
-                if (translation != null)
-                {
-                    Remove(translation);
-                }
-
-                value.CultureName = culture.Name;
-                Add(value);
+                this[culture.Name] = value;
             }
         }
 
@@ -42,19 +26,13 @@ namespace UniLocalizer.Localizer.Entity
         {
             get
             {
-                var translation = this.FirstOrDefault(x => x.CultureName == culture);
-                if (translation == null)
-                {
-                    translation = new T();
-                    translation.CultureName = culture;
-                    Add(translation);
-                }
-
-                return translation;
+                return this.FirstOrDefault(x => x.CultureName == culture);
             }
+
             set
             {
                 var translation = this.FirstOrDefault(x => x.CultureName == culture);
+
                 if (translation != null)
                 {
                     Remove(translation);
@@ -65,14 +43,32 @@ namespace UniLocalizer.Localizer.Entity
             }
         }
 
+        public bool HasCulture(CultureInfo culture)
+        {
+            return this.HasCulture(culture.Name);
+        }
+
         public bool HasCulture(string culture)
         {
             return this.Any(x => x.CultureName == culture);
         }
 
-        public bool HasCulture(CultureInfo culture)
+        public T GetOrCreate(CultureInfo culture)
         {
-            return this.Any(x => x.CultureName == culture.Name);
+            return GetOrCreate(culture.Name);
+        }
+
+        public T GetOrCreate(string culture)
+        {
+            var translation = this.FirstOrDefault(x => x.CultureName == culture);
+
+            if (translation != null)
+            {
+                translation = new T { CultureName = culture };
+                Add(translation);
+            }
+
+            return translation;
         }
 
         /// <summary>

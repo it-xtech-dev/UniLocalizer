@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using UniLocalizer.Localizer.Entity;
 
 namespace UniLocalizer.Demo.Models
@@ -19,8 +13,8 @@ namespace UniLocalizer.Demo.Models
         [NotMapped]
         public string TranslatedTitle
         {
-            get { return this.Translated.Title; }
-            set { this.Translated.Title = value; }
+            get { return this.Translated?.Title; }
+            set { this.TranslatedOrNew.Title = value; }
         }
 
         public string Author { get; set; }

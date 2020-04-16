@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace UniLocalizer.Localizer.Entity
+﻿namespace UniLocalizer.Localizer.Entity
 {
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public abstract class TranslationEntry<T> where T : TranslationEntry<T>, new()
     {
         [Column(TypeName = "varchar(5)")]
