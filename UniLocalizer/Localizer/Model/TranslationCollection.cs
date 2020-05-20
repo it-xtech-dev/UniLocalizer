@@ -62,7 +62,7 @@ namespace UniLocalizer.Localizer.Entity
         {
             var translation = this.FirstOrDefault(x => x.CultureName == culture);
 
-            if (translation != null)
+            if (translation == null)
             {
                 translation = new T { CultureName = culture };
                 Add(translation);
