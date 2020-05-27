@@ -25,6 +25,7 @@ namespace UniLocalizer.Localizer.Entity
 
         /// <summary>
         /// Gets translation entry for current language. Creates entry if translation doesn't exists.
+        /// WARNING: do not use attribute (TranslatedOrNew { get; }) due to creating "empty" translations in scenario - object used as model in POST, GET, ... requests.
         /// </summary>
         public virtual T GetTranslatedOrNew()
         {
