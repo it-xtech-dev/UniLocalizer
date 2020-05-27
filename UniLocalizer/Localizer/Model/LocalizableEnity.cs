@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 
 namespace UniLocalizer.Localizer.Entity
@@ -25,12 +26,9 @@ namespace UniLocalizer.Localizer.Entity
         /// <summary>
         /// Gets translation entry for current language. Creates entry if translation doesn't exists.
         /// </summary>
-        public virtual T TranslatedOrNew
+        public virtual T GetTranslatedOrNew()
         {
-            get
-            {
-                return this.Translations.GetOrCreate(CultureInfo.CurrentCulture.Name);
-            }
+            return this.Translations.GetOrCreate(CultureInfo.CurrentCulture.Name);
         }
     }
 }

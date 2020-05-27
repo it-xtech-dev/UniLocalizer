@@ -14,7 +14,7 @@ namespace UniLocalizer.Demo.Models
         public string TranslatedTitle
         {
             get { return this.Translated?.Title; }
-            set { this.TranslatedOrNew.Title = value; }
+            set { this.GetTranslatedOrNew().Title = value; }
         }
 
         public string Author { get; set; }
