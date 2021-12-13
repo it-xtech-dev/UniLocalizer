@@ -7,7 +7,9 @@
     <Company>xtech.pl</Company>
     <Copyright>xtech.pl</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Description>Localize your asp core app with ease. Autogenerate tokes by browsing ui. Translate tokens with simple online editor. See results of your work live - just after refresing the page (no more compiling resource files). Use easy readable json fromat for  translation storage.</Description>
+    <Description>Localize your asp core app with ease. Autogenerate tokes by browsing ui. Translate tokens with simple online editor. See results of your work live - just after refresing the page (no more compiling resource files). Use easy readable json fromat for  translation storage.
+
+Framework compatibility: .NET CORE 3.1</Description>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <Version>1.0.0.0</Version>
@@ -18,6 +20,7 @@
   </ItemGroup>
   <PropertyGroup>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <PackageReleaseNotes>.NET CORE 3.1 compatible version.</PackageReleaseNotes>
   </PropertyGroup>
   
   <ItemGroup>
@@ -35,6 +38,13 @@
 
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Model\**" />
+    <Content Remove="Model\**" />
+    <EmbeddedResource Remove="Model\**" />
+    <None Remove="Model\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -127,9 +137,5 @@
     <None Remove="wwwroot\lib\jquery\dist\jquery.min.js" />
     <None Remove="wwwroot\lib\jquery\dist\jquery.min.map" />
     <None Remove="wwwroot\lib\jquery\LICENSE.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Model\" />
   </ItemGroup>
 </Project>
