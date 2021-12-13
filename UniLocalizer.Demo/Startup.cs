@@ -33,15 +33,16 @@
             // Register uni localizer as localization service with some settings
             // below configuration is json based provider:
             services.AddUniLocalizer(opt =>
-            {
-                opt.ResourcesPath = Directory.GetCurrentDirectory() + @"\wwwroot\locale\";
-                opt.AutogenerateMissingKeys = true;
-                opt.DisplayShortNotation = true;
-                opt.JavascriptNamespace = "locale";
-                opt.IsTranslatorEnabled = true;
-                opt.TraslatorUserRole = null;
-            },
-            Configuration.GetConnectionString("DefaultConnection")
+                {
+                    opt.ResourcesPath = Directory.GetCurrentDirectory() + @"\wwwroot\locale\";
+                    opt.AutogenerateMissingKeys = true;
+                    opt.DisplayShortNotation = true;
+                    opt.JavascriptNamespace = "locale";
+                    opt.IsTranslatorEnabled = true;
+                    opt.TraslatorUserRole = null;
+                }
+                // Enables database sourced translations. When null, json files included into project structure will be the source of the translations.
+                // , Configuration.GetConnectionString("DefaultConnection")
             );
 
 
@@ -50,8 +51,11 @@
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 // DEMO: CheckConsentNeeded is set to false because theres no other way to save language settings
                 options.CheckConsentNeeded = context => false;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
             });
+
+            services.AddRazorPages();
+
 
 
             services
@@ -59,7 +63,7 @@
                 // DEMO:
                 // Enable view localization
                 .AddViewLocalization()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             // DEMO:
             // General language support

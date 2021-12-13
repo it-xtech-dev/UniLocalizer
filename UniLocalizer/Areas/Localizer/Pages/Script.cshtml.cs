@@ -72,7 +72,7 @@ namespace UniLocalizer.Pages
                 .Select(e => e.Value)
                 .ToList();
 
-            // render script page vie into string.
+            // render script page view into string.
             var viewResult = this.Renderer.RenderToString("~/Areas/Localizer/Pages/Script.cshtml", this);
 
             // returned html should contain script tags (that allow intelisense to work), we have to remove them before serving output.

@@ -33,6 +33,7 @@ namespace UniLocalizer
         /// </summary>
         /// <param name="services">The application services collection - passed over IoC injection</param>
         /// <param name="setupAction">The localizer options configuration action.</param>
+        /// <param name="connectionString">The connection string for database that will keep translations. When set translations will be sourced exclusivity for database exclusively. When null json sourced translations will be used.</param>
         /// <returns>ISeviceCollection for chaning</returns>
         public static IServiceCollection AddUniLocalizer(
             this IServiceCollection services,
