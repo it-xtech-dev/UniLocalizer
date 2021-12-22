@@ -56,8 +56,6 @@
 
             services.AddRazorPages();
 
-
-
             services
                 .AddMvc(opt => opt.EnableEndpointRouting = false)
                 // DEMO:
