@@ -34,7 +34,7 @@
             // below configuration is json based provider:
             services.AddUniLocalizer(opt =>
                 {
-                    opt.ResourcesPath = Directory.GetCurrentDirectory() + @"\wwwroot\locale\";
+                    opt.ResourcesPath = Directory.GetCurrentDirectory() + $"{Path.DirectorySeparatorChar}wwwroot{Path.DirectorySeparatorChar}locale{Path.DirectorySeparatorChar}";
                     opt.AutogenerateMissingKeys = true;
                     opt.DisplayShortNotation = true;
                     opt.JavascriptNamespace = "locale";

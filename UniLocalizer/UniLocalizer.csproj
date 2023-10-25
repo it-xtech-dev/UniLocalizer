@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
     <Authors>xtech.dev@gmail.com</Authors>
     <Company>xtech.pl</Company>
@@ -10,9 +10,9 @@
     <Description>Localize your asp core app with ease. Autogenerate tokes by browsing ui. Translate tokens with simple online editor. See results of your work live - just after refresing the page (no more compiling resource files). Use easy readable json fromat for  translation storage.
 
 Framework compatibility: .NET 5.0</Description>
-    <AssemblyVersion>1.1.1.0</AssemblyVersion>
-    <FileVersion>1.1.1.0</FileVersion>
-    <Version>1.1.1.0</Version>
+    <AssemblyVersion>1.1.2</AssemblyVersion>
+    <FileVersion>1.1.2</FileVersion>
+    <Version>1.1.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +20,12 @@ Framework compatibility: .NET 5.0</Description>
   </ItemGroup>
   <PropertyGroup>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-    <PackageReleaseNotes>.NET 5.0 compatible version.</PackageReleaseNotes>
+    <PackageReleaseNotes>.NET 6.0 compatible version. Cross platform ready</PackageReleaseNotes>
+    <Title>Unilocalizer</Title>
+    <PackageProjectUrl>https://github.com/it-xtech-dev/UniLocalizer</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/it-xtech-dev/UniLocalizer</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>localization, i18n, translation, languages</PackageTags>
   </PropertyGroup>
   
   <ItemGroup>

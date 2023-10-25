@@ -39,7 +39,7 @@ namespace UniLocalizer.Providers
                 var culture = new CultureInfo(new string(fileInfo.Name.TakeLast(10).Take(5).ToArray()));
                 // extract dot separated root relative path for resource file
                 var fileRelativePath = Path.GetRelativePath(resourceRootPath, Path.GetDirectoryName(file));
-                var filePathKey = fileRelativePath.Replace(@"\", ".").ToLower();
+                var filePathKey = fileRelativePath.Replace(Path.DirectorySeparatorChar, '.').ToLower();
                 // create file resource location key
                 string resourceLocationKey = "." + filePathKey + "." + new string(fileInfo.Name.SkipLast(11).ToArray());
                 // get json content for file
