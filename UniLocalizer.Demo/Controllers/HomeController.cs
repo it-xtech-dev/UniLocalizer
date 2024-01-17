@@ -4,12 +4,17 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using UniLocalizer.Demo.Models;
 
 namespace UniLocalizer.Demo.Controllers
 {
     public class HomeController : Controller
     {
+        public HomeController(IStringLocalizerFactory loc)
+        {
+        }
+
         public IActionResult Index()
         {
             return View();

@@ -27,24 +27,23 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(item => item.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
             // DEMO:
             // Register uni localizer as localization service with some settings
             // below configuration is json based provider:
             services.AddUniLocalizer(opt =>
-                {
-                    opt.ResourcesPath = Directory.GetCurrentDirectory() + $"{Path.DirectorySeparatorChar}wwwroot{Path.DirectorySeparatorChar}locale{Path.DirectorySeparatorChar}";
-                    opt.AutogenerateMissingKeys = true;
-                    opt.DisplayShortNotation = true;
-                    opt.JavascriptNamespace = "locale";
-                    opt.IsTranslatorEnabled = true;
-                    opt.TraslatorUserRole = null;
-                }
-                // Enables database sourced translations. When null, json files included into project structure will be the source of the translations.
-                // , Configuration.GetConnectionString("DefaultConnection")
+            {
+                opt.ResourcesPath = Directory.GetCurrentDirectory() + $"{Path.DirectorySeparatorChar}wwwroot{Path.DirectorySeparatorChar}locale{Path.DirectorySeparatorChar}";
+                opt.AutogenerateMissingKeys = true;
+                opt.DisplayShortNotation = true;
+                opt.JavascriptNamespace = "locale";
+                opt.IsTranslatorEnabled = true;
+                opt.TraslatorUserRole = null;
+            }
+            // Enables database sourced translations. When null, json files included into project structure will be the source of the translations.
+            // , Configuration.GetConnectionString("DefaultConnection")
             );
 
+            services.AddDbContext<AppDbContext>(item => item.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.Configure<CookiePolicyOptions>(options =>
             {
