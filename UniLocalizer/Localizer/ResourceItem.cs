@@ -108,6 +108,7 @@ namespace UniLocalizer
             get; set;
         }
 
+        /// <summary>Internal cache key: <c>{cultureName}:{locationKey}:{resourceKey}</c>.</summary>
         public static string GetGeneralKey(CultureInfo culture, string locationKey, string resourceKey)
         {
             return culture.Name + ":" + locationKey + ":" + resourceKey;

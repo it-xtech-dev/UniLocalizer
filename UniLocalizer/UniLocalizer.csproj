@@ -7,13 +7,18 @@
     <Company>xtech.pl</Company>
     <Copyright>xtech.pl</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Description>
-    Localize your asp core app with ease. Autogenerate tokes by browsing ui. Translate tokens with simple online editor. See results of your work live - just after refresing the page (no more compiling resource files). Use easy readable json fromat for  translation storage.
-    </Description>
+    <Description>ASP.NET Core JSON/SQL localization with optional translator UI. See README for integration scenarios.</Description>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <AssemblyVersion>1.1.2</AssemblyVersion>
     <FileVersion>1.1.2</FileVersion>
-    <Version>1.1.2</Version>
+    <Version>1.1.3</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />

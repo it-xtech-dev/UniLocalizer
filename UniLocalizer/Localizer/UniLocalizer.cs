@@ -7,8 +7,12 @@ using UniLocalizer.Providers;
 namespace UniLocalizer
 {
     /// <summary>
-    /// Provides localizer class.
+    /// <see cref="IStringLocalizer"/> backed by <see cref="Providers.IStorageProvider"/> for one resource location.
     /// </summary>
+    /// <remarks>
+    /// Use the constructor with explicit <see cref="CultureInfo"/> when localizing outside an HTTP request.
+    /// Otherwise prefer <see cref="UniLocalizerText"/> or store resource keys and resolve on the request thread.
+    /// </remarks>
     public class UniLocalizer : IStringLocalizer
     {
        
@@ -30,11 +34,8 @@ namespace UniLocalizer
         }
 
         /// <summary>
-        /// Initializes new instance of localizer with given provider, resource file location and culture
+        /// Localizer with fixed culture — use for background workers, email templates, or explicit user language.
         /// </summary>
-        /// <param name="provider">The resource provider.</param>
-        /// <param name="resourceLocation">The resource file location key ex. .data.file -> @localeroot/data/file.{culture.name}.json </param>
-        /// <param name="culture">The culture </param>
         public UniLocalizer(IStorageProvider provider, string resourceLocation, CultureInfo culture)
         {
             this.provider = provider;

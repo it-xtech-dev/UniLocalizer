@@ -5,8 +5,11 @@ using System.IO;
 namespace UniLocalizer
 {
     /// <summary>
-    /// Provides localizer options.
+    /// UniLocalizer configuration (extends <see cref="LocalizationOptions"/>).
     /// </summary>
+    /// <remarks>
+    /// Set <see cref="ResourcesPath"/> to the folder scanned for <c>*.{culture}.json</c> files (e.g. <c>wwwroot/locale</c>).
+    /// </remarks>
     public class ServiceOptions : LocalizationOptions
     {
         public ServiceOptions()

@@ -14,8 +14,13 @@ using UniLocalizer.Providers;
 namespace UniLocalizer
 {
     /// <summary>
-    /// Provides uni localizer factory.
+    /// <see cref="IStringLocalizerFactory"/> implementation. Exposes <see cref="Provider"/> for culture-explicit lookups.
     /// </summary>
+    /// <remarks>
+    /// <para><b>Request-bound:</b> <see cref="Create(string)"/> → <see cref="UniLocalizer"/> uses <see cref="CultureInfo.CurrentCulture"/> at construction.</para>
+    /// <para><b>No HttpContext:</b> use <see cref="Provider"/>.<see cref="Providers.IStorageProvider.Get(System.Globalization.CultureInfo, string, string)"/>
+    /// or <see cref="UniLocalizerText.Get(Microsoft.Extensions.Localization.IStringLocalizerFactory, System.Globalization.CultureInfo, string, string)"/>.</para>
+    /// </remarks>
     public class UniLocalizerFactory : IStringLocalizerFactory
     {
         private readonly IStorageProvider provider;
@@ -69,10 +74,10 @@ namespace UniLocalizer
         }
 
         /// <summary>
-        /// Creates new instance of localizer based on file resouce key.
+        /// Creates a localizer for a JSON resource location (dot path, leading dot optional).
         /// </summary>
-        /// <param name="fileResourceKey">The file resouce key specified as dot separated path and file name. Ex: data/file => data.file{culture.name}.json </param>
-        /// <returns></returns>
+        /// <param name="fileResourceKey">e.g. <c>.pages.about</c> → <c>locale/pages/about.{culture}.json</c>.</param>
+        /// <remarks>Culture is captured from <see cref="CultureInfo.CurrentCulture"/> at call time — not suitable for background threads.</remarks>
         public IStringLocalizer Create(string fileResourceKey)
         {
             if (!fileResourceKey.StartsWith(".")) fileResourceKey = "." + fileResourceKey;

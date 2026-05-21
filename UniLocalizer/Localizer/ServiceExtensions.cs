@@ -11,8 +11,13 @@ using UniLocalizer.Localizer.Model.Context;
 namespace UniLocalizer
 {
     /// <summary>
-    /// Provides localizer application service extensions
+    /// Registers UniLocalizer in the host application DI container.
     /// </summary>
+    /// <remarks>
+    /// After registration, call <c>UseRequestLocalization</c> in the pipeline.
+    /// Store <see cref="IStringLocalizerFactory"/> for background localization via <see cref="UniLocalizerText"/>
+    /// or defer translation until a request is available (see package README).
+    /// </remarks>
     public static class ServiceExtensions
     {
 
@@ -29,12 +34,12 @@ namespace UniLocalizer
 
 
         /// <summary>
-        /// Adds localizer serivce with optional configuration to application IoC container.
+        /// Adds <see cref="UniLocalizerFactory"/> (singleton), default <see cref="UniLocalizer"/>, and optional SQL storage.
         /// </summary>
-        /// <param name="services">The application services collection - passed over IoC injection</param>
-        /// <param name="setupAction">The localizer options configuration action.</param>
-        /// <param name="connectionString">The connection string for database that will keep translations. When set translations will be sourced exclusivity for database exclusively. When null json sourced translations will be used.</param>
-        /// <returns>ISeviceCollection for chaning</returns>
+        /// <param name="services">Application services.</param>
+        /// <param name="setupAction">Configures <see cref="ServiceOptions"/> (required: <see cref="ServiceOptions.ResourcesPath"/> for JSON).</param>
+        /// <param name="connectionString">When set, registers <c>LocalizerDbContext</c> and uses <c>SqlDbProvider</c>; otherwise <c>JsonProvider</c>.</param>
+        /// <returns>The service collection for chaining.</returns>
         public static IServiceCollection AddUniLocalizer(
             this IServiceCollection services,
             Action<ServiceOptions> setupAction,

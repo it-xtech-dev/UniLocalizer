@@ -1,5 +1,9 @@
 # UniLocalizer
-Localize your asp core app with ease. Autogenerate tokes by browsing ui. Translate tokens with simple online editor. See results of your work live - just after refresing the page (no more compiling resource files). Use easy readable json fromat for translation storage.
 
-# Example only
-Check demo project to see UniLocalizer in action (No official documentation provided yet).
+ASP.NET Core localization library (JSON/SQL, optional translator UI).
+
+**Consumer documentation:** [UniLocalizer/README.md](UniLocalizer/README.md) — setup, resource file layout, and usage scenarios (HTTP request, background workers, explicit culture, JavaScript bundles).
+
+**Demo:** `UniLocalizer.Demo`
+
+**Publishing:** from repo root run `.\publish-nuget-packages.ps1` (packs `UniLocalizer` and copies to the team NuGet feed). See `UniLocalizer/dev_info.txt`.

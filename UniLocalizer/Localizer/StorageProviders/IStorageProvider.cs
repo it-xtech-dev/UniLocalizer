@@ -15,7 +15,7 @@ namespace UniLocalizer.Providers
 {
 
     /// <summary>
-    /// Provides localizer json resource provider.
+    /// In-memory translation store (JSON or SQL). Thread-safe reads; use explicit <paramref name="culture"/> off the request thread.
     /// </summary>
     public interface IStorageProvider
     {
@@ -48,12 +48,12 @@ namespace UniLocalizer.Providers
         Dictionary<string, string> Get(CultureInfo culture);
 
         /// <summary>
-        /// Gets localized string for given culture, resource file locatio and resource key.
+        /// Resolves one token. Preferred API when <see cref="CultureInfo.CurrentUICulture"/> is unavailable or wrong.
         /// </summary>
-        /// <param name="culture">The culture.</param>
-        /// <param name="resourceLocation">The resouce file location (root relative) ex: path1.path2.fileName </param>
-        /// <param name="resourceKey">The resouce key</param>
-        /// <returns>Localized string</returns>
+        /// <param name="culture">Explicit culture (not inferred from HTTP).</param>
+        /// <param name="resourceLocation">Dot path, e.g. <c>.pages.about</c>.</param>
+        /// <param name="resourceKey">JSON property name.</param>
+        /// <returns>Translated text, or <c>#MISS:key</c> / <c>#AUTO:key</c> when missing (see <see cref="ServiceOptions.AutogenerateMissingKeys"/>).</returns>
         string Get(CultureInfo culture, string resourceLocation, string resourceKey);
 
         /// <summary>
