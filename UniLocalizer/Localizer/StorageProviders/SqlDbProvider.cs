@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +13,14 @@ namespace UniLocalizer.Providers
     /// </summary>
     public class SqlDbProvider: BaseProvider, IStorageProvider
     {
-        LocalizerDbContext dbContext;
+        readonly LocalizerDbContext dbContext;
 
         /// <summary>
         /// Creates new instance of provider class.
         /// </summary>
         /// <param name="options">The options</param>
+        /// <param name="cache">The cache</param>
+        /// <param name="dbContext">The database context</param>
         public SqlDbProvider(ServiceOptions options, IMemoryCache cache, LocalizerDbContext dbContext): base(options, cache)
         {
             this.dbContext = dbContext;
@@ -85,7 +86,7 @@ namespace UniLocalizer.Providers
             }
 
             // limit list only to files that has been modified
-            List<ResourceFile> filesToSaveList = this.ItemList.Values.Where(i => i.IsModified).Select(i => i.File).Distinct().ToList();
+            List<ResourceFile> filesToSaveList = [.. this.ItemList.Values.Where(i => i.IsModified).Select(i => i.File).Distinct()];
 
             // iterate over the files and write them to storage
             filesToSaveList.ForEach(file => {

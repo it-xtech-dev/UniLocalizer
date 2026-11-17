@@ -1,15 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Localization;
-using System.IO;
+﻿using Microsoft.Extensions.Localization;
 
 namespace UniLocalizer
 {
     /// <summary>
     /// UniLocalizer configuration (extends <see cref="LocalizationOptions"/>).
     /// </summary>
-    /// <remarks>
-    /// Set <see cref="ResourcesPath"/> to the folder scanned for <c>*.{culture}.json</c> files (e.g. <c>wwwroot/locale</c>).
-    /// </remarks>
     public class ServiceOptions : LocalizationOptions
     {
         public ServiceOptions()

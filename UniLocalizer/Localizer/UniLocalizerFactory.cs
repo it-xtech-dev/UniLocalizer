@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
-using System.IO;
+using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 using UniLocalizer.Localizer.Model.Context;
 using UniLocalizer.Providers;
 
@@ -18,8 +15,8 @@ namespace UniLocalizer
     /// </summary>
     /// <remarks>
     /// <para><b>Request-bound:</b> <see cref="Create(string)"/> → <see cref="UniLocalizer"/> uses <see cref="CultureInfo.CurrentCulture"/> at construction.</para>
-    /// <para><b>No HttpContext:</b> use <see cref="Provider"/>.<see cref="Providers.IStorageProvider.Get(System.Globalization.CultureInfo, string, string)"/>
-    /// or <see cref="UniLocalizerText.Get(Microsoft.Extensions.Localization.IStringLocalizerFactory, System.Globalization.CultureInfo, string, string)"/>.</para>
+    /// <para><b>No HttpContext:</b> use <see cref="Provider"/>.<see cref="IStorageProvider.Get(CultureInfo, string, string)"/>
+    /// or <see cref="UniLocalizerText.Get(IStringLocalizerFactory, CultureInfo, string, string)"/>.</para>
     /// </remarks>
     public class UniLocalizerFactory : IStringLocalizerFactory
     {
@@ -30,6 +27,8 @@ namespace UniLocalizer
         /// Initializes new instace of localizer factory
         /// </summary>
         /// <param name="options">IoC injected localizer options</param>
+        /// <param name="cache">The cache</param>
+        /// <param name="serviceProvider">The service provider</param>
         public UniLocalizerFactory(IOptions<ServiceOptions> options, IMemoryCache cache, IServiceProvider serviceProvider)
         {
             this.Options = options.Value;
@@ -69,7 +68,7 @@ namespace UniLocalizer
         /// <returns></returns>
         public IStringLocalizer Create(string baseName, string location)
         {
-            var locationKey = new string(baseName.Skip(location.Length).ToArray());
+            var locationKey = new string([.. baseName.Skip(location.Length)]);
             return new UniLocalizer(this.Provider, locationKey.ToLower());
         }
 
@@ -80,7 +79,7 @@ namespace UniLocalizer
         /// <remarks>Culture is captured from <see cref="CultureInfo.CurrentCulture"/> at call time — not suitable for background threads.</remarks>
         public IStringLocalizer Create(string fileResourceKey)
         {
-            if (!fileResourceKey.StartsWith(".")) fileResourceKey = "." + fileResourceKey;
+            if (!fileResourceKey.StartsWith('.')) fileResourceKey = "." + fileResourceKey;
 
             return new UniLocalizer(this.Provider, fileResourceKey);
         }

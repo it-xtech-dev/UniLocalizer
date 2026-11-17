@@ -16,7 +16,7 @@ namespace UniLocalizer
         /// <summary>
         /// Creates new instance of resource file.
         /// </summary>
-        /// <param name="path">The resouce file path</param>
+        /// <param name="index">The resource file index</param>
         /// <param name="key">The resouce file location key</param>
         /// <param name="content">The resouce file content</param>
         public ResourceFile(int index, string key, string content)

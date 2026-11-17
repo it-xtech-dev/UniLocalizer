@@ -15,10 +15,10 @@ namespace UniLocalizer
         /// Initializes new instance of resource item
         /// </summary>
         /// <param name="culture">The culture</param>
-        /// <param name="resourceFilePath">The file path where resource key is located</param>
         /// <param name="resourceLocationKey">The resouce file location key: .data.fileName </param>
         /// <param name="key">The resource key.</param>
         /// <param name="value">The resouce value</param>
+        /// <param name="file">The resource file</param>
         public ResourceItem(CultureInfo culture, string resourceLocationKey, string key, string value, ResourceFile file)
         {
             this.Culture = culture;

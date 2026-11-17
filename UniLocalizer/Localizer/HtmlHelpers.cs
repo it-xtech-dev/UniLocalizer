@@ -1,27 +1,25 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Localization;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
+using RazorPage.Services;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.Extensions.Localization;
-using System.Collections.Generic;
-using UniLocalizer.Pages;
-using RazorPage.Services;
 using UniLocalizer.Extensions;
-using Microsoft.AspNetCore.Builder;
+using UniLocalizer.Pages;
 
 namespace UniLocalizer
 {
@@ -60,10 +58,7 @@ namespace UniLocalizer
             }
 
             fileResourceKeys.ToList().ForEach(key => {
-                if (key == null)
-                {
-                    key = ResolveKeyFromCurrentView();
-                }
+                key ??= ResolveKeyFromCurrentView();
 
                 var resourceFileKey = culture.Name + ":." + key + ":";
                 
@@ -86,7 +81,7 @@ namespace UniLocalizer
                 }
             });
 
-            if (!filesQuery.Any())
+            if (filesQuery.Count == 0)
             {
                 new HtmlString($"<!-- JsLocalizer: Non of specified locationKey's cannot be matched with existing resource. Please specifiy at least one key for existing resource. -->");
             }
@@ -113,7 +108,7 @@ namespace UniLocalizer
             string ResolveKeyFromCurrentView()
             {
                 var pathKey = helper.ViewContext.ExecutingFilePath.Replace(@".cshtml", "").Replace(@"/", ".").ToLower();
-                var key = pathKey.Substring(1);
+                var key = pathKey[1..];
 
                 return key;
             }
@@ -153,7 +148,7 @@ namespace UniLocalizer
             var feature = httpContext.Features.Get<IRoutingFeature>();
             var routeData = feature.RouteData;
             var viewName = result.ViewName ?? routeData.Values["action"] as string;
-            var actionContext = new ActionContext(httpContext, routeData, new ControllerActionDescriptor());
+            var actionContext = new ActionContext(httpContext, routeData, new PageActionDescriptor());
             var options = httpContext.RequestServices.GetRequiredService<IOptions<MvcViewOptions>>();
             var htmlHelperOptions = options.Value.HtmlHelperOptions;
             var viewEngineResult = result.ViewEngine?.FindView(actionContext, viewName, true) ?? options.Value.ViewEngines.Select(x => x.FindView(actionContext, viewName, true)).FirstOrDefault(x => x != null);

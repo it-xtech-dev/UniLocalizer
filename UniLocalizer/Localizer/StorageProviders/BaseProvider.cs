@@ -1,25 +1,19 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using UniLocalizer.Extensions;
 
-/// <summary>
-/// TODO: Major refactoring:
-/// 1. Remove KeyHash in favor for Key (KeyHash is no longer required)
-/// 2. 
-/// 3. Evaluate error prones of using file Index props (some files might not have same index over time). Loading files in different orde
-/// </summary>
+// <summary>
+// TODO: Major refactoring:
+// 1. Remove KeyHash in favor for Key (KeyHash is no longer required)
+// 2. 
+// 3. Evaluate error prones of using file Index props (some files might not have same index over time). Loading files in different orde
+// </summary>
 namespace UniLocalizer.Providers
 {
 
@@ -35,6 +29,7 @@ namespace UniLocalizer.Providers
         /// Creates new instance of provider class.
         /// </summary>
         /// <param name="options">The options</param>
+        /// <param name="cache">The cache</param>
         public BaseProvider(ServiceOptions options, IMemoryCache cache)
         {
             this.Options = options;
@@ -61,12 +56,12 @@ namespace UniLocalizer.Providers
         /// <summary>
         /// Gets list of currently loaded resource items (translation tokens).
         /// </summary>
-        public Dictionary<string, ResourceItem> ItemList { get; } = new Dictionary<string, ResourceItem>();
+        public Dictionary<string, ResourceItem> ItemList { get; } = [];
 
         /// <summary>
         /// Gets list of currently loaded files.
         /// </summary>
-        public Dictionary<string, ResourceFile> LoadedFiles { get; } = new Dictionary<string, ResourceFile>();
+        public Dictionary<string, ResourceFile> LoadedFiles { get; } = [];
 
         /// <summary>
         /// Gets localized string for given culture, resource file locatio and resource key.
@@ -102,6 +97,7 @@ namespace UniLocalizer.Providers
 
         /// <summary>
         /// Gets collection of localized strings for given culture.
+        /// </summary>
         /// <param name="culture">The culture</param>
         /// <returns>NotImplementedException</returns>
         private Dictionary<string,string> InternalGet(CultureInfo culture)

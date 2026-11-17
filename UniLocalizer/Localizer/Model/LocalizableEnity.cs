@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 
 namespace UniLocalizer.Localizer.Entity
@@ -10,7 +9,7 @@ namespace UniLocalizer.Localizer.Entity
         public virtual TranslationCollection<T> Translations { 
             get; 
             set; 
-        } = new TranslationCollection<T>();
+        } = [];
 
         /// <summary>
         /// Gets translation entry for current language. Returns null if translation doesn't exists.
@@ -34,10 +33,10 @@ namespace UniLocalizer.Localizer.Entity
     }
 }
 
-/// <summary>
-/// Merges translations between current instance and database existing.
-/// </summary>
-/// <param name = "dbTranslations" ></ param >
+// <summary>
+// Merges translations between current instance and database existing.
+// </summary>
+// <param name = "dbTranslations" ></ param >
 //public void MergeTranslations<K>(EntityEntry<K> entityEntry) where K : TranslationBase<T>
 //{
 //    var baseTranslations = this.Translations.ToList();

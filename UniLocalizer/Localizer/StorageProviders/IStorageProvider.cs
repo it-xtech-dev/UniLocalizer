@@ -1,21 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace UniLocalizer.Providers
 {
 
     /// <summary>
-    /// In-memory translation store (JSON or SQL). Thread-safe reads; use explicit <paramref name="culture"/> off the request thread.
+    /// In-memory translation store (JSON or SQL). Thread-safe reads; use explicit "culture" off the request thread.
     /// </summary>
     public interface IStorageProvider
     {

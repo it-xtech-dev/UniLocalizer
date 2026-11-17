@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Globalization;
@@ -19,6 +18,7 @@ namespace UniLocalizer.Providers
         /// Creates new instance of provider class.
         /// </summary>
         /// <param name="options">The options</param>
+        /// <param name="cache">The cache</param>
         public JsonProvider(ServiceOptions options, IMemoryCache cache) : base(options, cache)
         {
             this.LoadResources(base.resourceRootPath);
@@ -36,12 +36,12 @@ namespace UniLocalizer.Providers
             {
                 var fileInfo = new FileInfo(file);
                 // extract culture form file name
-                var culture = new CultureInfo(new string(fileInfo.Name.TakeLast(10).Take(5).ToArray()));
+                var culture = new CultureInfo(new string([.. fileInfo.Name.TakeLast(10).Take(5)]));
                 // extract dot separated root relative path for resource file
                 var fileRelativePath = Path.GetRelativePath(resourceRootPath, Path.GetDirectoryName(file));
                 var filePathKey = fileRelativePath.Replace(Path.DirectorySeparatorChar, '.').ToLower();
                 // create file resource location key
-                string resourceLocationKey = "." + filePathKey + "." + new string(fileInfo.Name.SkipLast(11).ToArray());
+                string resourceLocationKey = "." + filePathKey + "." + new string([.. fileInfo.Name.SkipLast(11)]);
                 // get json content for file
                 var json = File.ReadAllText(file, Encoding.UTF8);
 

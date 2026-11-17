@@ -1,19 +1,18 @@
 ﻿namespace UniLocalizer.Demo
 {
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.IO;
-    using System.Linq;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Localization;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Options;
     using Models;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
 
     public class Startup
     {
@@ -23,6 +22,8 @@
         }
 
         public IConfiguration Configuration { get; }
+
+        private static readonly string[] supportedCultures = ["pl-PL", "en-US"];
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -53,14 +54,10 @@
                 options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
             });
 
-            services.AddRazorPages();
+            services.AddControllersWithViews()
+                .AddViewLocalization();
 
-            services
-                .AddMvc(opt => opt.EnableEndpointRouting = false)
-                // DEMO:
-                // Enable view localization
-                .AddViewLocalization()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddRazorPages();
 
             // DEMO:
             // General language support
@@ -68,26 +65,24 @@
             // https://andrewlock.net/adding-localisation-to-an-asp-net-core-application/
             services.Configure<RequestLocalizationOptions>(opts =>
             {
-                var cultures = new string[] { "pl-PL","en-US" };
-
                 // Read direcly from appsettings:
                 //Configuration.GetSection("SupportedCultures").GetChildren().Select(c => c.Value).ToList();              
 
-                opts.DefaultRequestCulture = new RequestCulture(cultures.FirstOrDefault());
+                opts.DefaultRequestCulture = new RequestCulture(supportedCultures.FirstOrDefault());
                 // Formatting numbers, dates, etc.
-                opts.SupportedCultures = cultures.Select(c => new CultureInfo(c)).ToArray();
+                opts.SupportedCultures = [.. supportedCultures.Select(c => new CultureInfo(c))];
                 // UI strings that we have localized.
-                opts.SupportedUICultures = cultures.Select(c => new CultureInfo(c)).ToArray();
+                opts.SupportedUICultures = [.. supportedCultures.Select(c => new CultureInfo(c))];
 
-                opts.RequestCultureProviders = new List<IRequestCultureProvider>
-                {
+                opts.RequestCultureProviders =
+                [
                     new CookieRequestCultureProvider()
-                };
+                ];
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             // DEMO:
             // Use localization features
@@ -108,12 +103,13 @@
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
-            app.UseMvc(routes =>
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

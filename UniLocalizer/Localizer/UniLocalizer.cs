@@ -16,9 +16,9 @@ namespace UniLocalizer
     public class UniLocalizer : IStringLocalizer
     {
        
-        private IStorageProvider provider;
-        private CultureInfo culture;
-        private string resourceLocation;
+        private readonly IStorageProvider provider;
+        private readonly CultureInfo culture;
+        private readonly string resourceLocation;
 
 
         /// <summary>
@@ -61,6 +61,7 @@ namespace UniLocalizer
         /// Gets localized value based on resouce token/key
         /// </summary>
         /// <param name="key">The resouce key</param>
+        /// <param name="arguments">The arguments for string formatting</param>
         /// <returns>Localized string for given key</returns>
         public LocalizedString this[string key, params object[] arguments]
         {

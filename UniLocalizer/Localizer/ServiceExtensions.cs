@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Localization;
 using RazorPage.Services;
+using System;
 using UniLocalizer.Localizer.Model.Context;
 
 namespace UniLocalizer
@@ -37,7 +36,7 @@ namespace UniLocalizer
         /// Adds <see cref="UniLocalizerFactory"/> (singleton), default <see cref="UniLocalizer"/>, and optional SQL storage.
         /// </summary>
         /// <param name="services">Application services.</param>
-        /// <param name="setupAction">Configures <see cref="ServiceOptions"/> (required: <see cref="ServiceOptions.ResourcesPath"/> for JSON).</param>
+        /// <param name="setupAction">Configures <see cref="ServiceOptions"/>.</param>
         /// <param name="connectionString">When set, registers <c>LocalizerDbContext</c> and uses <c>SqlDbProvider</c>; otherwise <c>JsonProvider</c>.</param>
         /// <returns>The service collection for chaining.</returns>
         public static IServiceCollection AddUniLocalizer(
@@ -59,12 +58,9 @@ namespace UniLocalizer
             // Init localizer serv
             services.Add(new ServiceDescriptor(typeof(IStringLocalizerFactory),
                 typeof(UniLocalizerFactory), ServiceLifetime.Singleton));
-            services.Add(new ServiceDescriptor(typeof(IStringLocalizer),
-                typeof(UniLocalizer), ServiceLifetime.Singleton));
 
             // TODO: CHECK - potentially could collide with app that will use this razor class lib
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
             // add razor page string renderer service
             services.AddTransient<IRazorToStringRenderer, RazorToStringRenderer>();
